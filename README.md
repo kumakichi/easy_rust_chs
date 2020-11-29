@@ -3581,7 +3581,7 @@ Found a 5!
 ```
 
 
-因为我们知道泛型，所以我们能够读懂`Option`的代码。它看起来是这样的。
+因为我们知道泛型，所以我们能够读懂`Option`的代码。它看起来是这样的:
 
 ```rust
 enum Option<T> {
@@ -4381,7 +4381,7 @@ fn main() {
 
 在接下来的这个例子中，我们有一个`Vec`的事情要做。然后我们做一个`VecDeque`，用`.push_front()`把它们放在前面，所以我们添加的第一个项目会在右边。但是我们推送的每一个项目都是一个`(&str, bool)`。`&str`是描述 `false`表示还没有完成。我们用我们的`done()`函数从后面弹出一个项目，但是我们不想删除它。相反，我们把`false`改成`true`，然后把它推到前面，这样我们就可以保留它。
 
-它看起来是这样的。
+它看起来是这样的:
 
 ```rust
 use std::collections::VecDeque;
@@ -4761,7 +4761,7 @@ fn main() {
 
 这将打印出 `0`，因为 `.unwrap_or(&0)` 给出了一个 0，即使它是 `None`。
 
-## trait
+## 特性
 
 我们以前见过trait:`Debug`、`Copy`、`Clone`都是trait。要给一个类型一个trait，就必须实现它。因为`Debug`和其他的trait都很常见，所以我们有自动实现的属性。这就是你写`#[derive(Debug)]`的情况:你是自动实现了`Debug`。
 
@@ -4774,7 +4774,7 @@ struct MyStruct {
 fn main() {}
 ```
 
-但是其他的特性就比较困难了，所以需要用`impl`手动实现。例如，`Add`(在`std::ops::Add`处找到)是用来添加两个东西的。但是Rust并不知道你到底要怎么添加东西，所以你必须告诉它。
+但是其他的特性就比较困难了，所以需要用`impl`手动实现。例如，`Add`(在`std::ops::Add`处找到)是用来累加两个东西的。但是Rust并不知道你到底要怎么累加，所以你必须告诉它。
 
 ```rust
 struct ThingsToAdd {
@@ -4785,14 +4785,14 @@ struct ThingsToAdd {
 fn main() {}
 ```
 
-我们可以添加`first_thing`和`second_thing`，但我们需要提供更多信息。也许我们想要一个`f32`，所以像这样。
+我们可以累加`first_thing`和`second_thing`，但我们需要提供更多信息。也许我们想要一个`f32`，所以像这样:
 
 ```rust
 // 🚧
 let result = self.second_thing + self.first_thing as f32
 ```
 
-但也许我们想要一个整数，所以像这样。
+但也许我们想要一个整数，所以像这样:
 
 ```rust
 // 🚧
@@ -4801,7 +4801,7 @@ let result = self.second_thing as u32 + self.first_thing
 
 或者我们想把`self.first_thing`放在`self.second_thing`旁边，说我们要这样加。所以如果我们把55加到33.4，我们要看到的是5533.4，而不是88.4。
 
-所以首先我们看一下如何做一个trait。关于`trait`s，要记住的重要一点是，它们是关于行为的。要制作一个trait，写`trait`，然后创建一些函数。
+所以首先我们看一下如何做一个trait。关于`trait`，要记住的重要一点是，它们是关于行为的。要制作一个trait，写`trait`，然后创建一些函数。
 
 ```rust
 struct Animal { // A simple struct - an Animal only has a name
@@ -4838,7 +4838,7 @@ fn run(&self) {
 }
 ```
 
-`fn run(&self)`的意思是 "fn `run()`取`&self`，不返回任何内容"。所以你不能这样做。
+`fn run(&self)`的意思是 "fn `run()`以`&self`为参数，不返回任何内容"。所以你不能这样做:
 
 ```rust
 fn run(&self) -> i32 { // ⚠️
@@ -4875,13 +4875,20 @@ impl Dog for Animal {
     }
 }
 
-fn main() {}
+fn main() {
+    let rover = Animal {
+        name: "Rover".to_string(),
+    };
+
+    rover.bark(); // Now Animal can use bark()
+    rover.run();  // and it can use run()
+}
 ```
 
 现在它打印的是 `Rover is running!`。这是好的，因为我们返回的是 `()`，或者说什么都没有，这就是trait所说的。
 
 
-当你写一个trait的时候，你可以直接写函数签名，但如果你这样做，用户将不得不写函数。但如果你这样做，用户就必须写函数。我们来试试。现在我们把`bark()`和`run()`改成只说`fn bark(&self);`和`fn run(&self);`。这不是一个完整的函数，所以必须由用户来写。
+当你写一个trait的时候，你可以直接写函数签名，但如果你这样做，用户将不得不写函数实现。我们来试试。现在我们把`bark()`和`run()`改成只说`fn bark(&self);`和`fn run(&self);`。这不是一个完整的函数实现，所以必须由用户来写。
 
 ```rust
 struct Animal {
@@ -4915,7 +4922,7 @@ fn main() {
 
 所以，当你创建一个trait时，你必须思考:"我应该写哪些功能？而用户应该写哪些函数？" 如果你认为用户每次使用函数的方式应该是一样的，那么就把函数写出来。如果你认为用户会以不同的方式使用，那就写出函数签名即可。
 
-所以，让我们尝试为我们的struct实现Displaytrait。首先我们将做一个简单的结构。
+所以，让我们尝试为我们的struct实现Display特性。首先我们将做一个简单的结构体:
 
 ```rust
 struct Cat {
@@ -4950,7 +4957,7 @@ fn main() {
 }
 ```
 
-但Debug打印不是最漂亮的方式，因为它看起来是这样的。
+但Debug打印不是最漂亮的方式，因为它看起来是这样的:
 
 ```text
 Mr. Mantle is a Cat { name: "Reggie Mantle", age: 4 }
@@ -4975,7 +4982,7 @@ impl fmt::Display for Position {
 fn main() {}
 ```
 
-有些部分我们还不明白，比如`<'_>`和`f`在做什么。但我们理解`Position`结构:它只是两个`f32`。我们也明白，`self.longitude`和`self.latitude`是结构中的字段。所以，也许我们的结构体就可以用这个代码，用`self.name`和`self.age`。另外，`write!`看起来很像`println!`，所以很熟悉。所以我们这样写。
+有些部分我们还不明白，比如`<'_>`和`f`在做什么。但我们理解`Position`结构体:它只是两个`f32`。我们也明白，`self.longitude`和`self.latitude`是结构体中的字段。所以，也许我们的结构体就可以用这个代码，用`self.name`和`self.age`。另外，`write!`看起来很像`println!`，所以很熟悉。所以我们这样写。
 
 ```rust
 use std::fmt;
@@ -5063,10 +5070,11 @@ Mr. Mantle's String is 42 letters long.
 
 
 
-关于trait，要记住的是，它们是关于某物的行为。你的`struct`是如何行动的？它能做什么？这就是trait的作用。如果你想想我们到目前为止所看到的一些trait，它们都是关于行为的:`Copy`是一个类型可以做的事情。`Display`也是一个类型能做的事情。`ToString`是另一个trait，它也是一个类型可以做的事情:它可以变化成一个`String`。在我们的 `Dog` trait中，*狗*这个词并不意味着你能做的事情，但它给出了一些让它做事情的方法。
+关于trait，要记住的是，它们是关于某些东西的行为。你的`struct`是如何行动的？它能做什么？这就是trait的作用。如果你想想我们到目前为止所看到的一些trait，它们都是关于行为的:`Copy`是一个类型可以做的事情。`Display`也是一个类型能做的事情。`ToString`是另一个trait，它也是一个类型可以做的事情:它可以变化成一个`String`。在我们的 `Dog` trait中，*Dog*这个词并不意味着你能做的事情，但它给出了一些让它做事情的方法。
  你也可以为 `struct Poodle` 或 `struct Beagle` 实现它，它们都会得到 `Dog` 方法。
 
-让我们再看另一个例子，它与公正行为的联系更加紧密。我们来想象一个幻想游戏，里面有一些简单的角色。一个是`Monster`，另外两个是`Wizard`和`Ranger`。`Monster`只是有`health`，所以我们可以攻击它，其他两个还没有什么。但是我们做了两个trait。一个叫`FightClose`，让你近身作战。另一个是`FightFromDistance`，让你在远处战斗。只有`Ranger`可以使用`FightFromDistance`。下面是它的样子。
+
+让我们再看一个与单纯行为联系更紧密的例子。我们将想象一个有一些简单角色的幻想游戏。一个是`Monster`，另外两个是`Wizard`和`Ranger`。`Monster`只是有`health`，所以我们可以攻击它，其他两个还没有什么。但是我们做了两个trait。一个叫`FightClose`，让你近身作战。另一个是`FightFromDistance`，让你在远处战斗。只有`Ranger`可以使用`FightFromDistance`。下面是它的样子:
 
 ```rust
 struct Monster {
@@ -5211,7 +5219,7 @@ You attack with your sword. Your opponent now has 30 health left. You are now at
 You attack with your bow. Your opponent now has 20 health left.  You are now at: Ranger { health: 80 }
 ```
 
-在真实的游戏中，可能最好为每个类型重写这个，因为`You are now at: Wizard { health: 60 }`看起来很有趣。这也是为什么trait里面的方法通常很简单，因为你不知道什么类型会使用它。例如，你不能写出 `self.0 += 10` 这样的东西。但是这个例子表明，我们可以在我们正在写的trait里面使用其他的trait。当我们这样做的时候，我们会得到一些我们可以使用的方法。
+在真实的游戏中，可能最好为每个类型重写这个，因为`You are now at: Wizard { health: 60 }`看起来有点可笑。这也是为什么trait里面的方法通常很简单，因为你不知道什么类型会使用它。例如，你不能写出 `self.0 += 10` 这样的东西。但是这个例子表明，我们可以在我们正在写的trait里面使用其他的trait。当我们这样做的时候，我们会得到一些我们可以使用的方法。
 
 
 
@@ -5294,7 +5302,7 @@ You raise your hands and cast a fireball! Your opponent now has 0 health left. Y
 
 ### From trait
 
-*From*是一个非常方便的trait，你知道这一点，因为你已经看到了很多。使用*From*，你可以从一个`&str`制作一个`String`，但你可以从许多其他类型制作许多类型。例如，Vec使用*From*来制作以下类型。
+*From*是一个非常方便的trait，你知道这一点，因为你已经看到了很多。使用*From*，你可以从一个`&str`制作一个`String`，你也可以用许多其他类型制作多种类型。例如，Vec使用*From*来制作以下类型:
 
 ```text
 From<&'_ [T]>
@@ -5312,7 +5320,7 @@ From<Vec<T>>
 From<VecDeque<T>>
 ```
 
-这是很多`Vec::from()`，我们还没有试过。我们来做几个，看看会怎么样。
+这里有很多`Vec::from()`我们还没有用过。我们来做几个，看看会怎么样:
 
 ```rust
 use std::fmt::Display; // We will make a generic function to print them so we want Display
@@ -5347,9 +5355,9 @@ fn main() {
 
 如果从类型上看，第二个和第三个向量是`Vec<u8>`，也就是`&str`和`String`的字节。所以你可以看到`From`是非常灵活的，用的也很多。我们用自己的类型来试试。
 
-我们将制作两个结构，然后为其中一个结构实现`From`。一个结构将是`City`，另一个结构将是`Country`。我们希望能够做到这一点。`let country_name = Country::from(vector_of_cities)`.
+我们将制作两个结构体，然后为其中一个结构体实现`From`。一个结构体将是`City`，另一个结构体将是`Country`。我们希望能够做到这一点。`let country_name = Country::from(vector_of_cities)`.
 
-它看起来是这样的。
+它看起来是这样的:
 
 ```rust
 #[derive(Debug)] // So we can print City
@@ -5406,7 +5414,7 @@ fn main() {
 "Turku" has a population of 186756.
 ```
 
-你可以看到，`From`很容易从你没有创建的类型中实现，比如`Vec`、`i32`等等。这里还有一个例子，我们创建一个有两个向量的向量。第一个向量存放偶数，第二个向量存放奇数。对于`From`，你可以给它一个`i32`s的向量，它会把它变成`Vec<Vec<i32>>`:一个容纳`i32`的向量。
+你可以看到，`From`很容易从你没有创建的类型中实现，比如`Vec`、`i32`等等。这里还有一个例子，我们创建一个有两个向量的向量。第一个向量存放偶数，第二个向量存放奇数。对于`From`，你可以给它一个`i32`的向量，它会把它变成`Vec<Vec<i32>>`:一个容纳`i32`的向量。
 
 ```rust
 use std::convert::From;
@@ -5480,9 +5488,9 @@ impl AsRef<OsStr> for String
 fn as_ref(&self) -> &OsStr
 ```
 
-你可以看到，它需要`&self`，并给出另一个类型的引用。这意味着，如果你有一个通用类型T，你可以说它需要`AsRef<str>`。如果你这样做，它将能够采取一个`&str`和一个`String`。
+你可以看到，它需要`&self`，并给出另一个类型的引用。这意味着，如果你有一个通用类型T，你可以说它需要`AsRef<str>`。如果你这样做，它将能够使用一个`&str`和一个`String`。
 
-我们先说说通用函数。这个还不能用。
+我们先说说泛型函数。这个还不能用。
 
 ```rust
 fn print_it<T>(input: T) {
@@ -5494,7 +5502,7 @@ fn main() {
 }
 ```
 
-Rust说`error[E0277]: T doesn't implement std::fmt::Display`。所以我们会要求T实现显示。
+Rust说`error[E0277]: T doesn't implement std::fmt::Display`。所以我们会要求T实现Display。
 
 ```rust
 use std::fmt::Display;
@@ -5565,7 +5573,7 @@ fn main() {
 
 这个打印`[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]`。
 
-而这里是功能性风格的例子。
+而这里是函数式风格的例子:
 
 ```rust
 fn main() {
@@ -5576,9 +5584,9 @@ fn main() {
 }
 ```
 
-`.collect()`可以做很多类型的集合，所以我们要告诉它类型。
+`.collect()`可以为很多类型做集合，所以我们要告诉它类型。
 
-用函数式可以链式方法。"链式方法 "的意思是把很多方法放在一个语句中。下面是一个很多方法链在一起的例子。
+用函数式可以链接方法。"链接方法"的意思是把很多方法放在一个语句中。下面是一个很多方法链在一起的例子。
 
 ```rust
 fn main() {
@@ -5610,11 +5618,11 @@ fn main() {
 
 ## 迭代器
 
-迭代器是一个构造，它可以给你集合中的项目，一次一个。实际上，我们已经使用了很多迭代器:`for`循环给你一个迭代器。当你想在其他时候使用迭代器时，你必须选择什么样的迭代器。
+迭代器是一个构造，它可以给你集合中的元素，一次一个。实际上，我们已经使用了很多迭代器:`for`循环给你一个迭代器。当你想在其他时候使用迭代器时，你必须选择什么样的迭代器:
 
-- `.iter()`对于一个引用的迭代器来说
-- `.iter_mut()`为可变引用的迭代器。
-- `.into_iter()`为一个值的迭代器(不是引用)。
+- `.iter()` 引用的迭代器
+- `.iter_mut()` 可变引用的迭代器
+- `.into_iter()` 值的迭代器(不是引用)
 
 `for`循环其实只是一个使用`.iter_mut()`的迭代器。这就是为什么你在使用它的时候可以改变值的原因。
 
