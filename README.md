@@ -12263,7 +12263,7 @@ fn main() {
 ```
 
 
-## OsString和CString
+### OsString和CString
 
 `std::ffi`是`std`的一部分，它帮助你将Rust与其他语言或操作系统一起使用。它有`OsString`和`CString`这样的类型，它们就像操作系统的`String`或语言C的`String`一样，它们各自也有自己的`&str`类型:`OsStr`和`CStr`。`ffi`的意思是 "foreign function interface"(外部函数接口)。
 
