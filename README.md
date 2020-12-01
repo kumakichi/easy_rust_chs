@@ -1746,7 +1746,7 @@ fn main() {
 
 你可以看到 `my_number` 是在 `main()` 函数中声明的，所以它一直活到最后。但是它的值是在循环里面得到的。然而，这个值和`my_number`一样长，因为`my_number`有这个值。而如果你在块里面写了`let my_number = loop_then_return(number)`，它就会马上死掉。
 
-如果你简化代码，对想象是有帮助的。`loop_then_return(number)`给出的结果是100，所以我们删除它，改写`100`。另外，现在我们不需要 `number`，所以我们也删除它。现在它看起来像这样。
+如果你简化代码，对想象是有帮助的。`loop_then_return(number)`给出的结果是100，所以我们删除它，改写`100`。另外，现在我们不需要 `number`，所以我们也删除它。现在它看起来像这样:
 
 ```rust
 fn main() {
@@ -4096,7 +4096,7 @@ fn or_insert(self, default: V) -> &mut V { // 🚧
 }
 ```
 
-有趣的是，它返回一个`mut`的引用。`&mut V`. 这意味着你可以使用`let`将其附加到一个变量上，并改变变量来改变`HashMap`中的值。所以对于每本书，如果没有条目，我们就会插入一个0。而如果有的话，我们将在引用上使用`+= 1`来增加数字。现在它看起来像这样。
+有趣的是，它返回一个`mut`的引用。`&mut V`. 这意味着你可以使用`let`将其附加到一个变量上，并改变变量来改变`HashMap`中的值。所以对于每本书，如果没有条目，我们就会插入一个0。而如果有的话，我们将在引用上使用`+= 1`来增加数字。现在它看起来像这样:
 
 ```rust
 use std::collections::HashMap;
@@ -4435,7 +4435,7 @@ You must: phone Loki back
 
 换句话说，它几乎为你做了所有的事情。
 
-我们可以用 `.parse()` 再试一次。我们将编写一个名为 `parse_str` 的函数，试图将 `&str` 变成 `i32`。它看起来像这样。
+我们可以用 `.parse()` 再试一次。我们将编写一个名为 `parse_str` 的函数，试图将 `&str` 变成 `i32`。它看起来像这样:
 
 ```rust
 use std::num::ParseIntError;
@@ -5778,7 +5778,7 @@ fn main() {}
 你可以看到`impl Iterator for Alternate`下面写着`type Item = i32`。这就是关联类型。我们的迭代器将针对我们的书籍列表，这是一个`Vec<String>`。当我们调用next的时候。
  它将给我们一个`String`。所以我们就写`type Item = String;`。这就是关联项。
 
-为了实现 `Iterator`，你需要写 `fn next()` 函数。这是你决定迭代器应该做什么的地方。对于我们的 `Library`，我们首先希望它给我们最后一本书。所以我们将`match`与`.pop()`一起，如果是`Some`的话，就把最后一项去掉。我们还想为每个项目打印 "is found!"。现在它看起来像这样。
+为了实现 `Iterator`，你需要写 `fn next()` 函数。这是你决定迭代器应该做什么的地方。对于我们的 `Library`，我们首先希望它给我们最后一本书。所以我们将`match`与`.pop()`一起，如果是`Some`的话，就把最后一项去掉。我们还想为每个项目打印 "is found!"。现在它看起来像这样:
 
 ```rust
 #[derive(Debug, Clone)]
@@ -6649,7 +6649,7 @@ fn main() {
 
 - `.windows()`会先给你一个[0, 1, 2]的切片。然后它将移过一片，给你[1, 2, 3]。它将一直这样做，直到最后到达3的最后一片，然后停止。
 
-所以让我们在一个简单的数字向量上使用它们。它看起来像这样。
+所以让我们在一个简单的数字向量上使用它们。它看起来像这样:
 
 ```rust
 fn main() {
@@ -11927,7 +11927,7 @@ impl Add for Point {
 }
 ```
 
-现在让我们为自己的类型实现`Add`。让我们想象一下，我们想把两个国家加在一起，这样我们就可以比较它们的经济。它看起来像这样。
+现在让我们为自己的类型实现`Add`。让我们想象一下，我们想把两个国家加在一起，这样我们就可以比较它们的经济。它看起来像这样:
 
 ```rust
 use std::fmt;
@@ -12760,7 +12760,7 @@ fn main() {
 
 这个函数被称为`bad_random_number`，因为它不是一个很好的随机数生成器。Rust有更好的crate，可以用比`rand`更少的代码做出随机数，比如`fastrand`。但这是一个很好的例子，你可以利用你的想象力用`Instant`来做一些事情。
 
-当你有一个线程时，你可以使用`std::thread::sleep`使它停止一段时间。当你这样做时，你必须给它一个持续时间。你不必做多个线程来做这件事，因为每个程序至少在一个线程上。`sleep`虽然需要一个`Duration`，所以它可以知道要睡多久。你可以这样选单元:`Duration::from_millis()`, `Duration::from_secs`, 等等。这里举一个例子。
+当你有一个线程时，你可以使用`std::thread::sleep`使它停止一段时间。当你这样做时，你必须给它一个duration。你不必创建多个线程来做这件事，因为每个程序至少在一个线程上。`sleep`虽然需要一个`Duration`，所以它可以知道要睡多久。你可以这样选单位:`Duration::from_millis()`, `Duration::from_secs`, 等等。这里举一个例子:
 
 ```rust
 use std::time::Duration;
@@ -12791,9 +12791,9 @@ Did I miss anything?
 
 `unreachable!()`
 
-这个宏有点像`todo!()`，除了它是针对你永远不会做的代码。也许你在一个枚举中有一个`match`，你知道它永远不会选择其中的一个arm，所以代码永远无法达到。如果是这样，你可以写`unreachable!()`，这样编译器就知道可以忽略这部分。
+这个宏有点像`todo!()`，除了它是针对你永远不会用的代码。也许你在一个枚举中有一个`match`，你知道它永远不会选择其中的一个arm，所以代码永远无法达到那个分支。如果是这样，你可以写`unreachable!()`，这样编译器就知道可以忽略这部分。
 
-例如，假设你有一个程序，当你选择一个地方居住时，它会写一些东西。他们在乌克兰，除了切尔诺贝利，其他地方都不错。你的程序不让任何人选择切尔诺贝利，因为它现在不是一个好地方。但是这个枚举是很早以前在别人的代码里做的，你无法更改。所以在`match`arm中，你可以用这里的宏。它的样子是这样的:
+例如，假设你有一个程序，当你选择一个地方居住时，它会写一些东西。在乌克兰，除了切尔诺贝利，其他地方都不错。你的程序不让任何人选择切尔诺贝利，因为它现在不是一个好地方。但是这个枚举是很早以前在别人的代码里做的，你无法更改。所以在`match`的arm中，你可以用这个宏。它是这样的:
 
 ```rust
 enum UkrainePlaces {
@@ -12823,9 +12823,9 @@ fn main() {
 
 这将打印出 `You will live in Kiev`。
 
-`unreachable!()`对你来说也很好读，因为它提醒你代码的某些部分是不可访问的。不过你必须确定代码确实是不可访问的。如果编译器曾经调用`unreachable!()`，程序就会崩溃。
+`unreachable!()`对你来说也很好读，因为它提醒你代码的某些部分是不可访问的。不过你必须确定代码确实是不可访问的。如果编译器调用`unreachable!()`，程序就会崩溃。
 
-此外，如果你曾经有不可到达的代码，而编译器知道，它会告诉你。下面是一个简单的例子。
+此外，如果你曾经有不可达的代码，而编译器知道，它会告诉你。下面是一个简单的例子:
 
 ```rust
 fn main() {
@@ -12856,13 +12856,13 @@ warning: unreachable pattern
 
 `column!`, `line!`, `file!`, `module_path!`
 
-这四个宏有点像`dbg!()`，因为你只是把它们放进去给你调试信息。但是它们不需要任何变量--你只需要用它们和括号一起使用，而没有其他的东西。它们很容易一起学习。
+这四个宏有点像`dbg!()`，因为你只是把它们放进代码去给你调试信息。但是它们不需要任何变量--你只需要用它们和括号一起使用，而没有其他的东西。它们放到一起很容易学:
 
-- `column!()`给你写的那一列。
+- `column!()`给你写的那一列
 - `line!()`给你写的那行字，然后是
 - `module_path!()`给你模块的位置。
 
-接下来的代码在一个简单的例子中展示了这三者。我们将假装有更多的代码(mods里面的mods)，因为这就是为什么我们要使用这些宏。你可以想象一个大的Rust程序,它有许多mod和文件。
+接下来的代码在一个简单的例子中展示了这三者。我们将假装有更多的代码(mod里面的mod)，因为这就是我们要使用这些宏的原因。你可以想象一个大的Rust程序,它有许多mod和文件。
 
 ```rust
 pub mod something {
@@ -12915,7 +12915,7 @@ The last country is Portugal inside the module rust_book::something::third_mod
 
 `cfg!`
 
-我们知道，你可以使用 `#[cfg(test)]` 和 `#[cfg(windows)]` 这样的属性来告诉编译器在某些情况下该怎么做。当你有`test`时，当你在测试模式下运行Rust时，它会运行代码(如果是在电脑上，你输入`cargo test`)。而当你使用`windows`时，如果用户使用的是Windows，它就会运行代码。但也许你只是想根据操作系统等改变一个小小的代码。这时候这个宏就很有用了。它返回一个`bool`。
+我们知道，你可以使用 `#[cfg(test)]` 和 `#[cfg(windows)]` 这样的属性来告诉编译器在某些情况下该怎么做。当你有`test`时，当你在测试模式下运行Rust时，它会运行代码(如果是在电脑上，你输入`cargo test`)。而当你使用`windows`时，如果用户使用的是Windows，它就会运行代码。但也许你只是想根据不同操作系统对依赖系统的代码做很小的修改。这时候这个宏就很有用了。它返回一个`bool`。
 
 ```rust
 fn main() {
@@ -12928,7 +12928,7 @@ fn main() {
 }
 ```
 
-这将以不同的方式打印，取决于你的系统。Rust Playground在Linux上运行，所以会打印出来。
+这将以不同的方式打印，取决于你的系统。Rust Playground在Linux上运行，所以会打印:
 
 ```text
 ...then in your hard drive, type the directory name followed by a slash. Then you...
@@ -12964,7 +12964,7 @@ fn main() {
 }
 ```
 
-现在根据配置的不同，它的运行方式也会不同。如果你只是运行程序，它会给你这样的结果。
+现在根据配置的不同，它的运行方式也会不同。如果你只是运行程序，它会给你这样的结果:
 
 ```text
 Returning 5. This is not a test
@@ -12984,10 +12984,9 @@ test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
 
 ## 编写宏
 
-编写宏是非常复杂的。你几乎不需要写，但有时你可能会想写，因为它们非常方便。写宏很有趣，因为它们几乎是一种不同的语言。要写一个宏，你实际上是用另一个叫`macro_rules!`的宏。然后你添加你的宏名称，并打开一个`{}`块。
- 里面有点像`match`语句。
+编写宏是非常复杂的。你可能永远都不需要写宏，但有时你可能会想写，因为它们非常方便。写宏很有趣，因为它们几乎是不同的语言。要写一个宏，你实际上是用另一个叫`macro_rules!`的宏。然后你添加你的宏名称，并打开一个`{}`块。里面有点像`match`语句。
 
-这里有一个只取`()`，然后只返回6。
+这里有一个只取`()`，然后返回6:
 
 ```rust
 macro_rules! give_six {
@@ -13002,7 +13001,7 @@ fn main() {
 }
 ```
 
-但这和`match`语句是不一样的，因为宏实际上不会编译任何东西。它只是接受一个输入并给出一个输出。然后编译器会检查它是否有意义。这就是为什么宏就像 "写代码的代码"。你会记得，一个真正的`match`语句需要给出相同的类型，所以这不会工作。
+但这和`match`语句是不一样的，因为宏实际上不会编译任何东西。它只是接受一个输入并给出一个输出。然后编译器会检查它是否有意义。这就是为什么宏就像 "写代码的代码"。你会记得，一个真正的`match`语句需要给出相同的类型，所以这不会工作:
 
 ```rust
 fn main() {
@@ -13048,7 +13047,7 @@ fn main() {
 }
 ```
 
-这个就好办了，打印的是`You didn't give me 6.`。你也可以看到，这不是匹配arm，因为没有`_`的情况。我们只能给它`(6)`，或者`()`。其他的都会出错。而我们给它的`6`甚至不是`i32`，只是一个输入6.其实你可以设置任何东西作为宏的输入，因为它只是看输入，看得到什么。比如说:
+这个就好办了，打印的是`You didn't give me 6.`。你也可以看到，这不是匹配arm，因为没有`_`行。我们只能给它`(6)`，或者`()`，其他的都会出错。而我们给它的`6`甚至不是`i32`，只是一个输入6。其实你可以设置任何东西作为宏的输入，因为它只是看输入，看得到什么。比如说:
 
 ```rust
 macro_rules! might_print {
@@ -13066,7 +13065,7 @@ fn main() {
 }
 ```
 
-所以这个奇怪的宏只响应两件事。`()`和`(THis is strange input 하하はは哈哈 but it still works)`. 没有其他的东西。它打印的是
+所以这个奇怪的宏只响应两件事。`()`和`(THis is strange input 하하はは哈哈 but it still works)`. 没有其他的东西。它打印的是:
 
 ```text
 You guessed the secret message!
@@ -13113,7 +13112,7 @@ You gave me: [8, 9, 7, 10]
 
 另外注意，我们写了`{:?}`，但它不会检查`&input`是否实现了`Debug`。它只会写代码，并尝试让它编译，如果没有，那么它就会给出一个错误。
 
-那么除了`expr`，宏还能看到什么呢？它们是 `block | expr | ident | item | lifetime | literal  | meta | pat | path | stmt | tt | ty | vis`. 这就是复杂的部分。你可以在[这里](https://doc.rust-lang.org/beta/reference/macros-by-example.html)看到它们各自的意思，这里说。
+那么除了`expr`，宏还能看到什么呢？它们是 `block | expr | ident | item | lifetime | literal  | meta | pat | path | stmt | tt | ty | vis`. 这就是复杂的部分。你可以在[这里](https://doc.rust-lang.org/beta/reference/macros-by-example.html)看到它们各自的意思，这里说:
 
 ```text
 item: an Item
@@ -13131,9 +13130,9 @@ vis: a possibly empty Visibility qualifier
 literal: matches -?LiteralExpression
 ```
 
-有另一个很好的网站叫cheats.rs，它解释了它们[在这里](https://cheats.rs/#macros-attributes)，并给出了每个例子。
+有另一个很好的网站叫cheats.rs，解释了它们[这里](https://cheats.rs/#macros-attributes)，并给出了每个例子。
 
-然而，对于大多数宏，你会使用 `expr`、`ident` 和 `tt`。`ident` 表示标识符，用于变量或函数名称。`tt`表示令牌树，排序表示任何类型的输入。让我们尝试用这两个词做一个简单的宏。
+然而，对于大多数宏，你只会用到 `expr`、`ident` 和 `tt`。`ident` 表示标识符，用于变量或函数名称。`tt`表示token树，和任何类型的输入。让我们尝试用这两个词做一个简单的宏。
 
 ```rust
 macro_rules! check {
@@ -13164,7 +13163,7 @@ Is [7, 8, 9] equal to [7, 8, 9]? true
 Is 6 equal to 10? false
 ```
 
-而这里有一个宏，可以把一个`tt`打印出来。它用一个叫`stringify!`的宏先做一个字符串。
+而这里有一个宏，输入`tt`，然后把它打印出来。它先用一个叫`stringify!`的宏创建一个字符串。
 
 ```rust
 macro_rules! print_anything {
@@ -13211,7 +13210,7 @@ fn main() {
 }
 ```
 
-所以它接受任何用逗号隔开的标记树，并使用 `stringify!` 把它变成一个字符串。然后打印出来。它的打印结果是:
+所以它接受任何用逗号隔开的token树，并使用 `stringify!` 把它变成一个字符串。然后打印出来。它的打印结果是:
 
 ```text
 ththdoetd, rcofe
@@ -13221,7 +13220,7 @@ ththdoetd, rcofe
 
 如果我们使用`+`而不是`*`，它会给出一个错误，因为有一次我们没有给它输入。所以`*`是一个比较安全的选择。
 
-所以现在我们可以开始看到宏的威力了。在接下来的这个例子中，我们实际上可以创建我们自己的函数。
+所以现在我们可以开始看到宏的威力了。在接下来的这个例子中，我们实际上可以创建我们自己的函数:
 
 ```rust
 macro_rules! make_a_function {
@@ -13250,7 +13249,7 @@ this, is, really, nice
 ```
 
 
-所以现在我们可以开始了解其他的宏了。你可以看到，我们已经使用的一些宏非常简单。这里是我们用来写入文件的`write!`的那个。
+所以现在我们可以开始了解其他的宏了。你可以看到，我们已经使用的一些宏非常简单。这里是我们用来写入文件的`write!`的那个:
 
 ```rust
 macro_rules! write {
@@ -13258,16 +13257,16 @@ macro_rules! write {
 }
 ```
 
-所以要使用它，你就输入这个。
+要使用它，你就输入这个:
 
 - 一个表达式(`expr`) 得到变量名`$dst`.
-- 之后的一切。如果它写的是`$arg:tt`，那么它只会取1，但是因为它写的是`$($arg:tt)*`，所以它取0，1，或者任何数字。
+- 之后的一切。如果它写的是`$arg:tt`，那么它只会取1个，但是因为它写的是`$($arg:tt)*`，所以它取0，1，或者任意多个。
 
 然后它取`$dst`，并对它使用了一个叫做`write_fmt`的方法。在这里面，它使用了另一个叫做`format_args!`的宏，它接受所有的`$($arg)*`，或者我们输入的所有参数。
 
 
 
-现在我们来看一下`todo!`这个宏。当你想让程序编译但还没有写出你的代码时，就会用到这个宏。它看起来像这样。
+现在我们来看一下`todo!`这个宏。当你想让程序编译但还没有写出你的代码时，就会用到这个宏。它看起来像这样:
 
 ```rust
 macro_rules! todo {
@@ -13276,13 +13275,12 @@ macro_rules! todo {
 }
 ```
 
-这个有两个选项:你可以输入`()`，也可以输入一些令牌树(`tt`)。
+这个有两个选项:你可以输入`()`，也可以输入一些token树(`tt`)。
 
-- 如果你输入`()`，它只是用`panic!`，并加上一个信息。所以其实你可以直接写`panic!("not yet implemented")`，而不是`todo!`，这也是一样的。
-- 如果你输入一些参数。
- 它会尝试打印它们。你可以看到里面有同样的`format_args!`宏，它的工作原理和`println!`一样。
+- 如果你输入`()`，它只是`panic!`，并加上一个信息。所以其实你可以直接写`panic!("not yet implemented")`，而不是`todo!`，这也是一样的。
+- 如果你输入一些参数，它会尝试打印它们。你可以看到里面有同样的`format_args!`宏，它的工作原理和`println!`一样。
 
-所以，如果你写了这个，它也会工作。
+所以，如果你写了这个，它也会工作:
 
 ```rust
 fn not_done() {
@@ -13386,20 +13384,20 @@ fn main() {
 
 剩下的部分，即使你多加了一个逗号，它也只是自己调用`dbg!`。
 
-正如你所看到的，宏是非常复杂的！通常你只想让一个宏自动做一些简单函数做不到的事情。通常你只想让一个宏自动完成一些简单函数不能很好完成的事情。学习宏的最好方法是看其他宏的例子。没有多少人能够快速写出宏而不出问题。所以不要认为你需要知道宏的一切，才能知道如何在Rust中写作。但如果你读了其他宏，并稍加修改，你就可以很容易地借用它们的力量。然后你可能会开始适应写自己的宏。
+正如你所看到的，宏是非常复杂的！通常你只想让一个宏自动完成一些简单函数不能很好完成的事情。学习宏的最好方法是看其他宏的例子。没有多少人能够快速写出宏而不出问题。所以不要认为你需要知道宏的一切，才能知道如何在Rust中写。但如果你读了其他宏，并稍加修改，你就可以很容易地借用它们的力量。然后你可能会开始适应写自己的宏。
 
 
 # 第2部分 - 电脑上的Rust
 
-你看到了，我们几乎可以在Rust中学习任何东西，只是使用Playground。但如果你到目前为止学到了所有的东西，你现在可能会想要在你的电脑上使用Rust。总有一些事情是你不能用Playground做的，比如使用文件或代码在多个文件中。其他一些你需要Rust在你的计算机上的东西是输入和标志。但最重要的是，在你的电脑上有了Rust，你可以使用Crate。我们已经了解了crate，但在playground中你只能使用最流行的crate。但在你的电脑上使用Rust，你可以在你的程序中使用任何crate。
+你看到了，我们几乎可以使用Playground学习Rust中的任何东西。但如果你到目前为止已经学了这么多，现在你可能会想要在你的电脑上使用Rust。总有一些事情是你不能用Playground做的，比如使用文件或代码在多个文件中。其他如输入和flags也需要在电脑上安装Rust。但最重要的是，在你的电脑上有了Rust，你可以使用Crate。我们已经了解了crate，但在playground中你只能使用最流行的crate。但在你的电脑上，你可以在程序中使用任何crate。
 
 ## cargo
 
-`rustc`的意思是Rust编译器，它是进行实际编译的。一个rust文件的结尾是`.rs`。但大多数人不会写出类似 `rustc main.rs` 的东西来编译。他们使用的是名为 `cargo` 的东西，它是 Rust 的主包管理器。
+`rustc`的意思是Rust编译器，实际的编译工作由它完成。一个rust文件的结尾是`.rs`。但大多数人不会写出类似 `rustc main.rs` 的东西来编译。他们使用的是名为 `cargo` 的东西，它是 Rust 的主包管理器。
 
-关于这个名字的一个说明:之所以叫`cargo`，是因为当你把crate放在一起时，你会得到cargo。Crate就是你在船上或卡车上看到的crate，但你记住，每个Rust元素也叫Crate。那么当你把它们放在一起时，你就会得到整个cargo。
+关于这个名字的一个说明: 之所以叫`cargo`，是因为当你把crate放在一起时，你会得到cargo。Crate就是你在船上或卡车上看到的木箱，但你记住，每个Rust项目也叫Crate。那么当你把它们放在一起时，你就会得到整个cargo。
 
-当你使用cargo来运行一个元素时，你可以看到这一点。让我们用 `rand` 试试简单的东西:我们只是在八个字母之间随机选择。
+当你使用cargo来运行一个项目时，你可以看到这一点。让我们用 `rand` 试试简单的东西:我们只是在八个字母之间随机选择。
 
 ```rust
 use rand::seq::SliceRandom; // Use this for .choose over slices
@@ -13415,7 +13413,7 @@ fn main() {
 }
 ```
 
-这样就会打印出`b c g h e a`这样的东西。但我们想先看看`cargo`的作用。要使用 `cargo` 并运行我们的程序，通常我们输入 `cargo run`。这样就可以建立我们的程序，并为我们运行它。但是当它开始编译的时候，会做这样的事情。
+这样就会打印出`b c g h e a`这样的东西。但我们想先看看`cargo`的作用。要使用 `cargo` 并运行我们的程序，通常我们输入 `cargo run`。这样就可以构建我们的程序，并为我们运行它。当它开始编译的时候，会做这样的事情:
 
 ```text
    Compiling getrandom v0.1.14
@@ -13430,9 +13428,9 @@ fn main() {
 g f c f h b
 ```
 
-所以看起来不只是带入了`rand`，还带入了一些其他的crate。这是因为我们的crate需要`rand`，但`rand`也有一些代码也需要其他crate。所以`cargo`会找到我们需要的所有crate，并把它们放在一起。在我们的案例中，我们只有7个，但在非常大的元素中，你可能会有200个或更多的crate要带进来。
+所以看起来不只是引入了`rand`，还引入了一些其他的crate。这是因为我们的crate需要`rand`，但`rand`也有一些代码也需要其他crate。所以`cargo`会找到我们需要的所有crate，并把它们放在一起。在我们的案例中，只有7个，但在非常大的项目中，你可能会有200个或更多的crate要引入。
 
-这就是你可以看到Rust的权衡的地方。Rust的速度非常快，因为它提前编译。它通过查看代码，看看你写的代码到底做了什么。例如，你可能会写这样的通用代码。
+这就是你可以看到Rust的权衡的地方。Rust的速度非常快，因为它提前编译。它通过查看代码，看你写的代码到底做了什么。例如，你可能会写这样的泛型代码:
 
 ```rust
 use std::fmt::Display;
@@ -13448,29 +13446,28 @@ fn main() {
 }
 ```
 
-这个函数可以取任何带`Display`的东西，所以我们给它一个`&str`，接下来给它一个`f64`，这对我们来说是没有问题的。但是编译器不看泛型，因为它不想在运行时做任何事情。它想把一个能自己运行的程序尽可能快地组装起来。所以当它看第一部分的`"Windy"`时，它没有看到`fn print_and_return_thing<T: Display>(input: T) -> T`。它看到的是`fn print_and_return_thing(input: &str) -> &str`这样的东西。而接下来它看到的是`fn print_and_return_thing(input: f64) -> f64`。所有关于trait的检查等等都是在编译时完成的。这就是为什么泛型需要更长的时间来编译，因为它需要弄清楚它们，并使之具体化。
+这个函数可以用任何实现了`Display`的作为参数，所以我们给它一个`&str`，接下来给它一个`f64`，这对我们来说是没有问题的。但是编译器不看泛型，因为它不想在运行时做任何事情。它想把一个能运行的程序尽可能快地组装起来。所以当它看第一部分的`"Windy"`时，它没有看到`fn print_and_return_thing<T: Display>(input: T) -> T`，它看到的是`fn print_and_return_thing(input: &str) -> &str`这样的东西。而接下来它看到的是`fn print_and_return_thing(input: f64) -> f64`。所有关于trait的检查等等都是在编译时完成的。这就是为什么泛型需要更长的时间来编译，因为它需要弄清楚它们，并使之具体化。
 
-还有一点:2020年的Rust在编译时间上很努力，因为这部分需要的时间最长。
- 每一个版本的Rust在编译时都会快一点，而且还有一些其他的计划来加快它的速度。但与此同时，以下是你应该知道的。
+还有一点:Rust 2020正在努力处理编译时间问题，因为这部分需要的时间最长。每一个版本的Rust在编译时都会快一点，而且还有一些其他的计划来加快它的速度。但与此同时，以下是你应该知道的:
 
 - `cargo build`会构建你的程序，这样你就可以运行它了。
 - `cargo run`将建立你的程序并运行它。
-- `cargo build --release`和`cargo run --release`也会有同样的效果，但在发布模式下。什么是发布模式？发布模式是为了当你的代码最终完成时。然后Rust会花更多的时间来编译，但它这样做是因为它使用了它所知道的一切来使它更快。Release模式实际上比常规模式*快的多*，常规模式被称为debug模式。那是因为它的编译速度更快，而且有更多的调试信息。常规的`cargo build`叫做 "debug build"，`cargo build --release`叫做 "release build"。
+- `cargo build --release`和`cargo run --release`发布模式下有同样的效果。什么是发布模式？当你的代码最终完成后就可以用发布模式了。Rust会花更多的时间来编译，但它这样做是因为它使用了它所知道的一切，来使编译出的程序运行更快。Release模式实际上比常规模式*快的多*，常规模式被称为debug模式。那是因为它的编译速度更快，而且有更多的调试信息。常规的`cargo build`叫做 "debug build"，`cargo build --release`叫做 "release build"。
 - `cargo check`是一种检查代码的方式。它就像编译一样，只不过它不会真正地创建你的程序。这是一个很好的检查你的代码的方法，因为它不像`build`或`run`那样需要很长时间。
 
 对了，命令中的`--release`部分叫做`flag`。这意味着命令中的额外信息。
 
-其他一些你需要知道的事情是。
+其他一些你需要知道的事情是:
 
-- `cargo new`. 你这样做是为了创建一个新的Rust元素。`new`之后，写上元素的名称，`cargo`将使文件夹和所有你需要的文件。
-- `cargo clean`. 当你把crate添加到`cargo.toml`时，电脑会下载所有需要的文件，它们会占用很多空间。如果你不想再让它们出现在你的电脑上，输入`cargo clean`。
+- `cargo new`. 这样做是为了创建一个新的Rust项目。`new`之后，写上项目的名称，`cargo`将会创建所有你需要的文件和文件夹。
+- `cargo clean`. 当你把crate添加到`cargo.toml`时，电脑会下载所有需要的文件，它们会占用很多空间。如果你不想再让它们在你的电脑上，输入`cargo clean`。
 
 关于编译器还有一点:只有当你第一次使用`cargo build`或`cargo run`时，它才会花费最多的时间。之后它就会记住，它又会快速编译。但如果你使用 `cargo clean`，然后运行 `cargo build`，它将不得不再慢慢地编译一次。
 
 
 ## 接受用户输入
 
-一个简单的方法是用`std::io::stdin`来接受用户的输入。这意味着 "标准输入"，也就是来自键盘的输入。用`stdin()`可以获得用户的输入，但是你就会想用`.read_line()`把它放在`&mut String`中。下面是一个简单的例子，但它既能用，也不能用。
+一个简单的方法是用`std::io::stdin`来接受用户的输入。这意味着 "标准输入"，也就是来自键盘的输入。用`stdin()`可以获得用户的输入，但是接下来你就会想用`.read_line()`把它放到`&mut String`中。下面是一个简单的例子，但它既能工作，也不能工作:
 
 ```rust
 use std::io;
@@ -13524,7 +13521,7 @@ You wrote "x\r\n"
 
 
 
-这是因为键盘输入其实不只是`something`，而是`something`和`Enter`键。有一个简单的方法可以解决这个问题，叫做`.trim()`，它可以把所有的空白都去掉。顺便说一下，空格都是[这些字符](https://doc.rust-lang.org/reference/whitespace.html)。
+这是因为键盘输入其实不只是`something`，而是`something`和`Enter`键。有一个简单的方法可以解决这个问题，叫做`.trim()`，它可以把所有的空白都去掉。顺便说一下，[这些字符](https://doc.rust-lang.org/reference/whitespace.html)都是空白字符。
 
 ```text
 U+0009 (horizontal tab, '\t')
@@ -13540,7 +13537,7 @@ U+2028 (line separator)
 U+2029 (paragraph separator)
 ```
 
-这样就可以把`xrn`变成只剩`x`了。现在可以用了。
+这样就可以把`x\r\n`变成只剩`x`了。现在它可以工作了:
 
 ```
 use std::io;
@@ -13558,7 +13555,7 @@ fn main() {
 }
 ```
 
-现在可以打印了。
+现在可以打印了:
 
 ```text
 Please type something, or x to escape:
@@ -13584,19 +13581,19 @@ fn main() {
 }
 ```
 
-如果我们写`cargo run`，那么它的打印结果是这样的。
+如果我们写`cargo run`，那么它的打印结果是这样的:
 
 ```text
 Args { inner: ["target\\debug\\rust_book.exe"] }
 ```
 
-让我们给它更多的输入，看看它的作用。我们输入 `cargo run but with some extra words`. 2733。 它给我们:
+让我们给它更多的输入，看看它的作用。我们输入 `cargo run but with some extra words` 。 它给我们:
 
 ```text
 Args { inner: ["target\\debug\\rust_book.exe", "but", "with", "some", "extra", "words"] }
 ```
 
-有意思。而当我们查看[Args的页面](https://doc.rust-lang.org/std/env/struct.Args.html)时，我们看到它实现了`IntoIterator`。这意味着我们可以做所有我们知道的关于迭代器的事情来读取和改变它。让我们试试这个。
+有意思。而当我们查看[Args的页面](https://doc.rust-lang.org/std/env/struct.Args.html)时，我们看到它实现了`IntoIterator`。这意味着我们可以.用所有我们知道的关于迭代器的事情来读取和改变它。让我们试试这个:
 
 ```rust
 use std::env::args;
@@ -13610,7 +13607,7 @@ fn main() {
 }
 ```
 
-现在它说。
+现在它说:
 
 ```text
 You entered: target\debug\rust_book.exe
@@ -13621,7 +13618,7 @@ You entered: extra
 You entered: words
 ```
 
-你可以看到，第一个参数总是程序名，所以你经常会想跳过它，比如这样。
+你可以看到，第一个参数总是程序名，所以你经常会想跳过它，比如这样:
 
 ```rust
 use std::env::args;
@@ -13681,7 +13678,7 @@ Please write either "capital" or "lowercase" and then some input.
 Please write either "capital" or "lowercase" and then some input.
 ```
 
-输入。`cargo run capital I think I understand now`:
+输入:`cargo run capital I think I understand now`:
 
 ```text
 I
@@ -13691,7 +13688,7 @@ UNDERSTAND
 NOW
 ```
 
-输入。`cargo run LOWERCASE Does this work too?`
+输入:`cargo run LOWERCASE Does this work too?`
 
 ```text
 does
@@ -13702,7 +13699,7 @@ too?
 
 
 
-除了`Args`中用户给出的`std::env`，还有`Vars`是系统变量。这些都是用户没有输入的程序的基本设置。你可以用`std::env::vars()`把它们都看成一个`(String, String)`。有非常多的。比如说
+除了`Args`中用户给出的`std::env`，还有`Vars`是系统变量。这些都是用户没有输入的程序的基本设置。你可以用`std::env::vars()`把它们都看成一个`(String, String)`。这个有非常多，比如说:
 
 ```rust
 fn main() {
@@ -13712,7 +13709,7 @@ fn main() {
 }
 ```
 
-只要做到这一点，就能显示出你的用户会话的所有信息。它将显示这样的信息。
+运行这段代码，就能显示出你的用户会话的所有信息。它将显示这样的信息:
 
 ```text
 ("CARGO", "/playground/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo")
@@ -13749,7 +13746,7 @@ fn main() {
 所以如果你需要这些信息，`Vars`就是你想要的。
 
 最简单的方法是使用`env!`宏来获取单个`Var`。你只要把变量的名字放在里面就可以了。
- 它将给你一个`&str`。但如果变量是错误的，它将不会工作，所以如果你不确定，然后使用`option_str!`代替。如果我们在操场上写这个。
+ 它将给你一个`&str`。但如果变量是错误的，它将不会工作，所以如果你不确定，然后使用`option_env!`代替。如果我们在Playground上写这个:
 
 ```rust
 fn main() {
@@ -13759,7 +13756,7 @@ fn main() {
 }
 ```
 
-然后我们得到输出。
+然后我们得到输出:
 
 ```text
 playground
@@ -13767,15 +13764,15 @@ Didn't work
 /playground/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo
 ```
 
-所以`option_str!`永远是比较安全的宏。如果你真的想让程序在找不到环境变量时崩溃，那么`env!`会更好。
+所以`option_env!`永远是比较安全的宏。如果你真的想让程序在找不到环境变量时崩溃，那么`env!`会更好。
 
 
 
 ## 使用文件
 
-现在我们在电脑上使用Rust，我们可以开始处理文件了。你会注意到，现在我们会开始在代码中看到越来越多的`Result`。这是因为一旦你开始处理文件和类似的事情，很多事情都会出错。一个文件可能不在那里，或者计算机无法读取它。
+现在我们在电脑上使用Rust，我们可以开始处理文件了。你会注意到，现在我们会开始在代码中越来越多的看到`Result`。这是因为一旦你开始处理文件和类似的事情，很多事情都会出错。一个文件可能不在那里，或者计算机无法读取它。
 
-你可能还记得，如果你想使用`?`运算符，它必须在它所在的函数中返回一个`Result`。如果你记不住错误类型，你可以什么都不给它，让编译器告诉你。让我们用一个试图用`.parse()`做一个数字的函数来试试。
+你可能还记得，如果你想使用`?`运算符，调用它的函数必须返回一个`Result`。如果你记不住错误类型，你可以什么都不给它，让编译器告诉你。让我们用一个试图用`.parse()`创建一个数字的函数来试试。
 
 ```rust
 // ⚠️
@@ -13804,7 +13801,7 @@ error[E0308]: mismatched types
              found enum `std::result::Result<_, std::num::ParseIntError>`
 ```
 
-太好了！所以我们只需要把回车改成这样。现在它的工作。
+太好了！所以我们只需要把回车改成这样。现在它能工作了:
 
 ```rust
 use std::num::ParseIntError;
@@ -13856,7 +13853,8 @@ error[E0277]: the `?` operator can only be used in a function that returns `Resu
    | |_- this function should return `Result` or `Option` to accept `?`
 ```
 
-但实际上`main()`可以返回一个`Result`，就像其他函数一样。如果我们的函数有效，我们不想返回任何东西(main()并没有给其他任何东西)。而如果它不工作，我们将返回同样的错误。所以我们可以这样写。
+But actually `main()` can return a `Result`, just like any other function. If our function works, we don't want to return anything (main() isn't giving anything to anything else). And if it doesn't work, we will return the same error. So we can write it like this:
+但实际上`main()`可以返回一个`Result`，就像其他函数一样。如果我们的函数能工作，我们不想返回任何东西(main()并没有给其他任何东西)。而如果它不工作，我们将返回同样的错误。所以我们可以这样写:
 
 ```rust
 use std::num::ParseIntError;
@@ -13872,7 +13870,7 @@ fn main() -> Result<(), ParseIntError> {
 }
 ```
 
-不要忘了最后的`Ok(())`:这在Rust中是很常见的，它的意思是`Ok`，里面是`()`，也就是我们的返回值。它的意思是`Ok`，里面是`()`，这是我们的返回值。现在它打印出来了。
+不要忘了最后的`Ok(())`:这在Rust中是很常见的，它的意思是`Ok`，里面是`()`，也就是我们的返回值。现在它打印出来了:
 
 ```text
 88
@@ -13880,7 +13878,7 @@ fn main() -> Result<(), ParseIntError> {
 ```
 
 
-这在刚使用`.parse()`的时候不是很有用，但是用文件就会有用。这是因为`?`也为我们改变了错误类型。下面是[?运算符的页面](https://doc.rust-lang.org/std/macro.try.html)用简单的英语说的。
+只用`.parse()`的时候不是很有用，但是用文件就很有用。这是因为`?`也为我们改变了错误类型。下面是[?运算符的页面](https://doc.rust-lang.org/std/macro.try.html)用简单的英语写的:
 
 ```text
 If you get an `Err`, it will get the inner error. Then `?` does a conversion using `From`. With that it can change specialized errors to more general ones. The error it gets is then returned.
@@ -13894,7 +13892,7 @@ type Result<T> = Result<T, Error>;
 
 所以这是一个`Result<T, Error>`，但我们只需要写出`Result<T>`部分。
 
-现在让我们第一次尝试对文件进行工作。`std::fs`是处理文件的方法所在，有了`std::io::Write`，你就可以在其中写入。有了它，我们就可以用`.write_all()`来写进文件。
+现在让我们第一次尝试使用文件。`std::fs`是处理文件的方法所在，有了`std::io::Write`，你就可以写。有了它，我们就可以用`.write_all()`来写进文件。
 
 ```rust
 use std::fs;
@@ -13909,9 +13907,9 @@ fn main() -> std::io::Result<()> {
 }
 ```
 
-然后如果你点击新文件`myfilename.txt`，就会说`Let's put this in the file`。
+然后如果你打开新文件`myfilename.txt`，会看到内容`Let's put this in the file`。
 
-不过我们不需要在两行上这样做，因为我们有`?`操作符。如果我们想要的结果有效，它就会传给我们，有点像在迭代器上使用很多方法一样。这时候`?`就变得非常方便了。
+不过我们不需要写两行，因为我们有`?`操作符。如果有效，它就会传递我们想要的结果，有点像在迭代器上很多方法一样。这时候`?`就变得非常方便了。
 
 ```rust
 use std::fs;
@@ -13925,7 +13923,7 @@ fn main() -> std::io::Result<()> {
 
 所以这是说 "请尝试创建一个文件，然后检查是否成功。如果成功了，那就使用`.write_all()`，然后检查是否成功。"
 
-而事实上，也有一个函数可以同时完成这两件事。它的名字叫`std::fs::write`。在它里面，你给它你想要的文件名，以及你想要放在里面的内容。再次强调，小心! 如果有相同的名字，它就会删除已经存在的文件。另外，它让你写一个`&str`，前面不写`b`，就是因为这个。
+而事实上，也有一个函数可以同时完成这两件事。它的名字叫`std::fs::write`。在它里面，你给它你想要的文件名，以及你想要放在里面的内容。再次强调，小心! 如果有相同的名字，它就会删除已经存在的文件。另外，它让你写一个`&str`，前面不写`b`，因为这个:
 
 ```rust
 pub fn write<P: AsRef<Path>, C: AsRef<[u8]>>(path: P, contents: C) -> Result<()>
@@ -13933,7 +13931,7 @@ pub fn write<P: AsRef<Path>, C: AsRef<[u8]>>(path: P, contents: C) -> Result<()>
 
 `AsRef<[u8]>`就是为什么你可以给它任何一个。
 
-很简单的。
+很简单的:
 
 ```rust
 use std::fs;
@@ -13949,11 +13947,11 @@ Dad: Yep. The world didn't turn color until sometimes in the 1930s...")?;
 }
 ```
 
-所以这就是我们要用的文件。这是一个名叫Calvin的漫画人物和他爸爸的对话，他爸爸对他的问题并不认真。有了这个，我们就可以创建一个文件，每次都可以使用。
+所以这就是我们要用的文件。这是一个名叫Calvin的漫画人物和他爸爸的对话，他爸爸对他的问题并不认真。有了这个，每次我们都可以创建一个文件来使用。
 
 
 
-打开一个文件和创建一个文件一样简单。你只要用`open()`代替`create()`就可以了。之后(如果它找到了你的文件)，你就可以做`read_to_string()`这样的事情。要做到这一点，你可以创建一个可变的 `String`，然后把文件读到那里。它看起来像这样。
+打开一个文件和创建一个文件一样简单。你只要用`open()`代替`create()`就可以了。之后(如果它找到了你的文件)，你就可以做`read_to_string()`这样的事情。要做到这一点，你可以创建一个可变的 `String`，然后把文件读到那里。它看起来像这样:
 
 ```rust
 use std::fs;
@@ -13978,7 +13976,7 @@ Dad: Yep. The world didn't turn color until sometimes in the 1930s...")?;
 }
 ```
 
-这样就可以打印了。
+会打印:
 
 ```rust
 CALVIN: DAD, HOW COME OLD PHOTOGRAPHS ARE ALWAYS BLACK AND WHITE? DIDN'T THEY HAVE COLOR FILM BACK THEN? DAD: SURE THEY DID. IN 
@@ -14037,9 +14035,9 @@ Dad: Yep. The world didn't turn color until sometimes in the 1930s...")?;
 Error: Os { code: 80, kind: AlreadyExists, message: "The file exists." }
 ```
 
-让我们尝试使用`.append()`，这样我们就可以向一个文件写入。为了写入文件，我们可以使用 `.write_all()`，这是一个尝试写入你给它的一切的方法。
+让我们尝试使用`.append()`，这样我们就可以向一个文件写入。为了写入文件，我们可以使用 `.write_all()`，这是一个尝试写入你给它的一切内容的方法。
 
-另外，我们将使用 `write!` 宏来做同样的事情。你会记得这个宏，当我们为我们的结构做`impl Display`的时候。这次我们是在文件上使用它，而不是在缓冲区上使用它。
+另外，我们将使用 `write!` 宏来做同样的事情。你会记得这个宏，我们在为结构体做`impl Display`的时候用到过。这次我们是在文件上使用它，而不是在缓冲区上。
 
 ```rust
 use std::fs;
@@ -14080,9 +14078,9 @@ Well, truth is stranger than fiction.
 
 ## cargo文档
 
-你可能已经注意到，Rust文档看起来总是几乎一样。在左边你可以看到`struct`s和`trait`s，代码例子在右边等等。这是因为你只要输入`cargo doc`就可以自动创建文档。
+你可能已经注意到，Rust文档看起来总是几乎一样。在左边你可以看到`struct`和`trait`，代码例子在右边等等。这是因为你只要输入`cargo doc`就可以自动创建文档。
 
-即使是什么都不做的元素，也可以帮助你了解Rust中的特性。例如，这里有两个几乎什么都不做的结构，以及一个也什么都不做的`fn main()`。
+即使是创建一个什么都不做的项目，也可以帮助你了解Rust中的特性。例如，这里有两个几乎什么都不做的结构体，以及一个也什么都不做的`fn main()`。
 
 ```rust
 struct DoesNothing {}
@@ -14098,7 +14096,7 @@ fn main() {}
 ```
 
 
-但如果你输入`cargo doc --open`，你可以看到比你想象中更多的信息。首先它给你显示的是这样的。
+但如果你输入`cargo doc --open`，你可以看到比你想象中更多的信息。首先它给你显示的是这样的:
 
 ```text
 Crate rust_book
@@ -14176,7 +14174,7 @@ fn main() {}
 ```
 
 
-现在可以打印了。
+现在会打印:
 
 ```text
 Crate rust_book
@@ -14187,9 +14185,9 @@ Functions
 main
 ```
 
-`cargo doc`当你使用很多别人的crate时，是非常好的。因为这些crate都在不同的网站上，可能需要一些时间来搜索所有的crate。但如果你使用`cargo doc`，你就会把它们都放在你硬盘的同一个地方。
+当你使用很多别人的crate时，`cargo doc`是非常好的。因为这些crate都在不同的网站上，可能需要一些时间来搜索所有的crate。但如果你使用`cargo doc`，你就会把它们都放在你硬盘的同一个地方。
 
 ## 结束了吗？
 
-简单英语中的Rust就这样结束了。但是我还在这里，如果你有什么问题可以告诉我。欢迎[在Twitter上联系我](https://twitter.com/mithridates)或者添加一个拉取请求、问题等。如果有些地方不容易理解，你也可以告诉我。Rust的简易英语需要非常容易理解，所以请告诉我英语太难的地方。当然，Rust本身也可能是很难理解的，但我们至少可以确保英语是容易的。
+简单英语学Rust就这样结束了。但是我还在这里，如果你有什么问题可以告诉我。欢迎[在Twitter上联系我](https://twitter.com/mithridates)或者添加一个pull request、issue等。如果有些地方不容易理解，你也可以告诉我。简单英语学Rust需要非常容易理解，所以请告诉我英语太难的地方。当然，Rust本身也可能是很难理解的，但我们至少可以确保英语是容易的。
 
