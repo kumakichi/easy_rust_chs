@@ -3,4 +3,4 @@ authors = ["David MacLeod"]
 language = "en"
 multilingual = false
 src = "src"
-title = "Easy Rust" 
+title = "简单英语学Rust" 
