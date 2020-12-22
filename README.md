@@ -8138,7 +8138,7 @@ error[E0412]: cannot find type `WorldsBestType` in this scope
    |                             ^^^^^^^^^^^^^^ not found in this scope
 ```
 
-`todo!()`其实和另一个宏一样。`unimplemented!()`. 程序员们经常使用 `unimplemented()`，但打字时太长了，所以他们创建了 `todo!()`，它比较短。
+`todo!()`其实和另一个宏一样。`unimplemented!()`. 程序员们经常使用 `unimplemented!()`，但打字时太长了，所以他们创建了 `todo!()`，它比较短。
 
 ## Rc
 
@@ -8883,7 +8883,7 @@ fn main() {
 }
 ```
 
-到目前为止，这个只是打印。
+到目前为止，这个只打印:
 
 ```text
 The thread is working!
@@ -10552,7 +10552,7 @@ fn main() {
 }
 ```
 
-这只是打印了`[5, 5]`。我们的代码现在让人读起来感觉非常奇怪。我们可以在`main()`上面看到`Deref`，然后弄清楚`*billy`的意思是`i8`，但是如果有很多代码呢？可能我们的代码有2000行，突然要弄清楚为什么要`.push()` `*billy`。`Character`当然不仅仅是`i8`的智能指针。
+这只打印了`[5, 5]`。我们的代码现在让人读起来感觉非常奇怪。我们可以在`main()`上面看到`Deref`，然后弄清楚`*billy`的意思是`i8`，但是如果有很多代码呢？可能我们的代码有2000行，突然要弄清楚为什么要`.push()` `*billy`。`Character`当然不仅仅是`i8`的智能指针。
 
 当然，写`hit_points_vec.push(*billy)`并不违法，但这让代码看起来非常奇怪。也许一个简单的`.get_hp()`方法会好得多，或者另一个存放角色的结构体。然后你可以迭代并推送每个角色的 `hit_points`。`Deref`提供了很多功能，但最好确保代码的逻辑性。
 
@@ -12774,7 +12774,7 @@ fn main() {
 }
 ```
 
-这将只是打印
+这将只打印
 
 ```text
 I must sleep now.
@@ -13352,7 +13352,7 @@ macro_rules! dbg {
 }
 ```
 
-(`eprintln!`与`println!`相同，只是打印到`io::stderr`而不是`io::stdout`。还有`eprint!`不增加一行)。)
+(`eprintln!`与`println!`相同，只打印到`io::stderr`而不是`io::stdout`。还有`eprint!`不增加一行)。)
 
 所以我们可以自己去试一试。
 
