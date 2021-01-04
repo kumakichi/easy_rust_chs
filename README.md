@@ -1,3 +1,7 @@
+![example workflow name](https://github.com/kumakichi/easy_rust_chs/workflows/github%20pages/badge.svg)
+
+[在线查看](https://kumakichi.github.io/easy_rust_chs)
+
 ## 介绍
 
 Rust是一种新的语言，已经有了很好的教科书。但是有时候它的教材很难，因为它的教材是给以英语为母语的人看的。现在很多公司和人学习Rust，如果有一本英语简单的书，他们可以学得更快。这本教材就是给这些公司和人用简单的英语来学习Rust的。
@@ -8163,7 +8167,7 @@ fn main() {
 
 `takes_a_string`取了`user_name`之后，你就不能再使用了。这里没有问题:你可以直接给它`user_name.clone()`。但有时一个变量是一个结构的一部分，也许你不能克隆这个结构。或者`String`真的很长，你不想克隆它。这些都是`Rc`的一些原因，它让你拥有多个所有者。`Rc`就像一个优秀的办公人员。`Rc`写下谁拥有所有权，以及有多少个。然后一旦所有者的数量下降到0，这个变量就可以消失了。
 
-下面是如何使用`Rc`。首先想象两个结构:一个叫 `City`，另一个叫 `Cities`。`City`有一个城市的信息，而`Cities`把所有的城市都放在`Vec`中。
+下面是如何使用`Rc`。首先想象两个结构:一个叫 `City`，另一个叫 `CityData`。`City`有一个城市的信息，而`CityData`把所有的城市都放在`Vec`中。
 
 ```rust
 #[derive(Debug)]
@@ -8234,7 +8238,7 @@ struct City {
 }
 
 #[derive(Debug)]
-struct Cities {
+struct CityData {
     names: Vec<String>,
     histories: Vec<Rc<String>>,
 }
@@ -11493,7 +11497,7 @@ mod tests {
 
 ### rand
 
-你有没有注意到，我们还没有使用任何随机数？那是因为随机数不在标准库中。但是有很多crate "几乎是标准库"，因为大家都在使用它们。在任何情况下，带入一个 crate 是非常容易的。如果你的电脑上有Rust，有一个叫`cargo.toml`的文件，里面有这些信息。`cargo.toml`文件在你启动时是这样的。
+你有没有注意到，我们还没有使用任何随机数？那是因为随机数不在标准库中。但是有很多crate "几乎是标准库"，因为大家都在使用它们。在任何情况下，带入一个 crate 是非常容易的。如果你的电脑上有Rust，有一个叫`Cargo.toml`的文件，里面有这些信息。`Cargo.toml`文件在你启动时是这样的。
 
 ```text
 [package]
@@ -11524,7 +11528,7 @@ rand = "0.7.3"
 
 然后Cargo会帮你完成剩下的工作。然后你就可以在`rand`文档网站上开始编写像[本例代码](https://docs.rs/rand/0.7.3/rand/)这样的代码。要想进入文档，你可以点击[crates.io上的页面](https://crates.io/crates/rand)中的`docs`按钮。
 
-关于Cargo的介绍就到这里了:我们现在使用的还只是playground。幸运的是，playground已经安装了前100个crate。所以你还不需要写进`cargo.toml`。在playground上，你可以想象，它有一个这样的长长的列表，有100个crate。
+关于Cargo的介绍就到这里了:我们现在使用的还只是playground。幸运的是，playground已经安装了前100个crate。所以你还不需要写进`Cargo.toml`。在playground上，你可以想象，它有一个这样的长长的列表，有100个crate。
 
 
 ```text
@@ -11540,7 +11544,7 @@ another_nice_crate = "1.7"
 ```rust
 use rand; // This means the whole crate rand
           // On your computer you can't just write this;
-          // you need to write in the cargo.toml file first
+          // you need to write in the Cargo.toml file first
 
 fn main() {
     for _ in 0..5 {
@@ -13460,7 +13464,7 @@ fn main() {
 其他一些你需要知道的事情是:
 
 - `cargo new`. 这样做是为了创建一个新的Rust项目。`new`之后，写上项目的名称，`cargo`将会创建所有你需要的文件和文件夹。
-- `cargo clean`. 当你把crate添加到`cargo.toml`时，电脑会下载所有需要的文件，它们会占用很多空间。如果你不想再让它们在你的电脑上，输入`cargo clean`。
+- `cargo clean`. 当你把crate添加到`Cargo.toml`时，电脑会下载所有需要的文件，它们会占用很多空间。如果你不想再让它们在你的电脑上，输入`cargo clean`。
 
 关于编译器还有一点:只有当你第一次使用`cargo build`或`cargo run`时，它才会花费最多的时间。之后它就会记住，它又会快速编译。但如果你使用 `cargo clean`，然后运行 `cargo build`，它将不得不再慢慢地编译一次。
 
