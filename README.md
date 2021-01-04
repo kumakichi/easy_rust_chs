@@ -1,6 +1,8 @@
+## 更新
+
 ![example workflow name](https://github.com/kumakichi/easy_rust_chs/workflows/github%20pages/badge.svg)
 
-[在线查看](https://kumakichi.github.io/easy_rust_chs)
+2021年1月4日: 支持在线查看 [点击阅读](https://kumakichi.github.io/easy_rust_chs)
 
 ## 介绍
 
