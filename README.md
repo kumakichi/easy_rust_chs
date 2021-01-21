@@ -6349,7 +6349,7 @@ Err("No CEO found for Stark Enterprises")
 ```
 
 
-`.and_then()`是一个有用的消息，它接收一个`Option`，然后让你对它的值做一些事情，并把它传递出去。所以它的输入是一个 `Option`，输出也是一个 `Option`。这有点像一个安全的 "解包，然后做一些事情，然后再包"。
+`.and_then()`是一个有用的方法，它接收一个`Option`，然后让你对它的值做一些事情，并把它传递出去。所以它的输入是一个 `Option`，输出也是一个 `Option`。这有点像一个安全的 "解包，然后做一些事情，然后再包"。
 
 一个简单的例子是，我们使用 `.get()` 从一个 vec 中得到一个数字，因为它返回一个 `Option`。现在我们可以把它传给 `and_then()`，如果它是 `Some`，我们可以对它做一些数学运算。如果是`None`，那么`None`就会被传递过去。
 
@@ -6774,7 +6774,7 @@ Found a hamlet: Markerville with 45 people
 Found a town: Cardston with 3585 people
 ```
 
-最后，这里有一个例子，我们也使用`.matches_indices()`。在这个例子中，我们根据`&str`中的空格数，将名字放入`struct`中。
+最后，这里有一个例子，我们也使用`.match_indices()`。在这个例子中，我们根据`&str`中的空格数，将名字放入`struct`中。
 
 ```rust
 #[derive(Debug)]
@@ -10737,9 +10737,9 @@ mod country { // The main mod doesn't need pub
                 crate::country::province::print_province(province);
                 println!("in the city of {}", city);
             }
-            }
         }
     }
+}
 
 fn main() {
     crate::country::province::city::print_city("Canada", "New Brunswick", "Moncton");
@@ -11841,7 +11841,7 @@ fn main() {
 你可以使用 `From` trait从 `u8` 中得到一个字符，但对于 `u32`，你使用 `TryFrom`，因为它可能无法工作。`u32`中的数字比Unicode中的字符多很多。我们可以通过一个简单的演示来了解。
 
 ```rust
-use std::convert::TryFrom; // You need to brig TryFrom in to use it
+use std::convert::TryFrom; // You need to bring TryFrom in to use it
 use rand::prelude::*;      // We will use random numbers too
 
 fn main() {
