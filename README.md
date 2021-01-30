@@ -5934,7 +5934,7 @@ fn main() {
 
 通常在Rust中，你会在一个方法里面看到闭包，因为里面有一个闭包是非常方便的。我们在上一节的 `.map()` 和 `.for_each()` 中看到了闭包。在那一节中，我们写了 `|x|` 来引入迭代器中的下一个元素，这就是一个闭包。
 
-下面再举一个例子:我们知道，如果`unwrap`不起作用，可以用`unwrap_or`方法给出一个值。之前我们写的是:`let fourth = my_vec.get(3).unwrap_or_(&0);`。但是还有一个`unwrap_or_else`方法，里面有一个闭包。所以你可以这样做:
+下面再举一个例子:我们知道，如果`unwrap`不起作用，可以用`unwrap_or`方法给出一个值。之前我们写的是:`let fourth = my_vec.get(3).unwrap_or(&0);`。但是还有一个`unwrap_or_else`方法，里面有一个闭包。所以你可以这样做:
 
 ```rust
 fn main() {
