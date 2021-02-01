@@ -2,6 +2,8 @@
 
 ![example workflow name](https://github.com/kumakichi/easy_rust_chs/workflows/github%20pages/badge.svg)
 
+2021年2月1日: [Youtube视频](https://www.youtube.com/playlist?list=PLfllocyHVgsRwLkTAhG0E-2QxCf-ozBkk)
+
 2021年1月4日: 支持在线查看 [点击阅读](https://kumakichi.github.io/easy_rust_chs)
 
 ## 介绍
@@ -67,7 +69,7 @@ Rust是一门很新的语言，但已经非常流行。它之所以受欢迎，�
     - [When panic and unwrap are good](#when-panic-and-unwrap-are-good)
   - [trait](#trait)
     - [From trait](#from-trait)
-    - [在函数中取一个字符串和一个&str](#在函数中取一个字符串和一个str)
+    - [在函数中使用字符串和&str](#在函数中使用字符串和&str)
   - [链式方法](#链式方法)
   - [迭代器](#迭代器)
     - [迭代器如何工作](#迭代器如何工作)
@@ -4385,7 +4387,7 @@ fn main() {
 
 现在速度快了很多，在playground上，它在一秒内完成，而不是放弃。
 
-在接下来的这个例子中，我们在一个`Vec`上做一些事。我们创建一个`VecDeque`，用`.push_front()`把它们放在前面，所以我们添加的第一个元素会在右边。但是我们推送的每一个元素都是一个`(&str, bool)`。`&str`是描述 `false`表示还没有完成。我们用我们的`done()`函数从后面弹出一个元素，但是我们不想删除它。相反，我们把`false`改成`true`，然后把它推到前面，这样我们就可以保留它。
+在接下来的这个例子中，我们在一个`Vec`上做一些事。我们创建一个`VecDeque`，用`.push_front()`把它们放在前面，所以我们添加的第一个元素会在右边。但是我们推送的每一个元素都是一个`(&str, bool)`:`&str`是描述, `false`表示还没有完成。我们用`done()`函数从后面弹出一个元素，但是我们不想删除它。相反，我们把`false`改成`true`，然后把它推到前面，这样我们就可以保留它。
 
 它看起来是这样的:
 
@@ -4434,7 +4436,7 @@ You must: phone Loki back
 
 ## ?操作符
 
-有一种比`Result`(和`Option`)更短的处理方法，比`match`更短，比`if let`更短。它叫做 "问号运算符"，就是`?`。在返回结果的函数后，可以加上`?`。这样就会。
+有一种更短的方法来处理`Result`(和`Option`)，它比`match`和`if let`更短。它叫做 "问号运算符"，就是`?`。在返回结果的函数后，可以加上`?`。这样就会:
 
 - 返回`Result`里面的内容，如果是`Ok`。
 - 如果是`Err`，则将错误传回。
@@ -4454,7 +4456,7 @@ fn parse_str(input: &str) -> Result<i32, ParseIntError> {
 fn main() {}
 ```
 
-这个函数接收一个 `&str`。如果是 `Ok`，则给出一个 `i32`，包裹在 `Ok` 中。如果是 `Err`，则返回 `ParseIntError`。然后我们尝试解析这个数字，并加上`?`。也就是 "检查是否错误，如果没问题就给出Result里面的内容"。如果没问题，就会返回错误并结束。但如果没问题，就会进入下一行。下一行是`Ok()`里面的数字。我们需要用`Ok`来包装，因为返回的是`Result<i32, ParseIntError>`，而不是`i32`。
+这个函数接收一个 `&str`。如果是 `Ok`，则给出一个 `i32`，包裹在 `Ok` 中。如果是 `Err`，则返回 `ParseIntError`。然后我们尝试解析这个数字，并加上`?`。也就是 "检查是否错误，如果没问题就给出Result里面的内容"。如果有问题，就会返回错误并结束。但如果没问题，就会进入下一行。下一行是`Ok()`里面的数字。我们需要用`Ok`来包装，因为返回的是`Result<i32, ParseIntError>`，而不是`i32`。
 
 现在，我们可以试试我们的函数。让我们看看它对`&str`的vec有什么作用。
 
@@ -4559,7 +4561,7 @@ fn main() {
 
 它打印出`8, 9, 10`，一切正常。
 
-但试想一下，后来我们写的代码越来越多，忘记了`my_vec`只能是三个东西。现在`my_vec`在这部分有六个东西。
+但试想一下，后来我们写的代码越来越多，忘记了`my_vec`只能有三个元素。现在`my_vec`在这部分有六个元素。
 
 ```rust
 fn prints_three_things(vector: Vec<i32>) {
@@ -4572,7 +4574,7 @@ fn main() {
 }
 ```
 
-不会发生错误，因为[0]和[1]和[2]都在这个较长的`Vec`里面。但如果真的很重要，只有三样东西呢？我们就不会知道有问题了，因为程序不会崩溃。我们应该这样做，而不是。
+不会发生错误，因为[0]和[1]和[2]都在这个较长的`Vec`里面。但如果只能有三个元素呢？我们就不会知道有问题了，因为程序不会崩溃。我们应该这样做:
 
 ```rust
 fn prints_three_things(vector: Vec<i32>) {
@@ -4629,7 +4631,7 @@ fn main() {
 
 这不会有任何作用，因为三个断言宏都没有问题。(这就是我们想要的)
 
-如果你愿意，还可以加个留言。
+如果你愿意，还可以加个提示信息。
 
 ```rust
 fn main() {
@@ -4667,7 +4669,7 @@ fn main() {
 }
 ```
 
-它将显示。
+它将显示:
 
 ```text
 thread 'main' panicked at 'assertion failed: `(left != right)`
@@ -4677,11 +4679,11 @@ thread 'main' panicked at 'assertion failed: `(left != right)`
 
 所以它说 "你说左！=右，但左==右"。而且它显示我们的信息说`You entered Mithridates. Input must not equal Mithridates`。
 
-`unwrap`也是好的，当你在写程序的时候，你想让它在出现问题的时候崩溃。后来，当你的代码写完后，把`unwrap`改成其他不会崩溃的东西就好了。
+当你在写程序的时候，想让它在出现问题的时候崩溃，`unwrap`是个好注意。后面，当你的代码写完后，把`unwrap`改成其他不会崩溃的东西就好了。
 
-你也可以用`expect`，它和`unwrap`一样，但是更好一些，因为你给它自己的信息。教科书通常会给出这样的建议。"如果你经常使用`.unwrap()`, 至少也要用`.expect()`来获得更好的错误信息."
+你也可以用`expect`，它和`unwrap`一样，但是更好一些，因为它支持用户自定义信息。教科书通常会给出这样的建议:"如果你经常使用`.unwrap()`, 至少也要用`.expect()`来获得更好的错误信息."
 
-这样会崩溃的。
+这样会崩溃的:
 
 ```rust
    // ⚠️
@@ -4727,7 +4729,7 @@ fn main() {
 }
 ```
 
-消息是:``thread 'main' panicked at 'called `Option::unwrap()` on a `None` value', src\main.rs:2:32``。我们不查行，就不知道是第一个`.unwrap()`还是第二个`.unwrap()`。最好是检查长度，也不要解包。不过有了`.expect()`至少会好*一点*。下面是`.expect()`的情况。
+消息是:``thread 'main' panicked at 'called `Option::unwrap()` on a `None` value', src\main.rs:2:32``。我们不检查行号，就不知道是第一个`.unwrap()`还是第二个`.unwrap()`。最好是检查长度，也不要解包。不过有了`.expect()`至少会好*一点*。下面是`.expect()`的情况。
 
 ```rust
 fn try_two_unwraps(input: Vec<Option<i32>>) {
@@ -4744,10 +4746,10 @@ fn main() {
 所以，这是好一点的。`thread 'main' panicked at 'The first unwrap had a None!', src\main.rs:2:32`. 我们也有行号，所以我们可以找到它。
 
 
-如果你想一直有一个你想选择的值，也可以用`unwrap_or`。如果你这样做，它永远不会慌。就是这样的。
+如果你想一直有一个你想选择的值，也可以用`unwrap_or`。如果你这样做，它永远不会崩溃。就是这样的。
 
 
-- 1)好，因为你的程序不会慌，但
+- 1)好，因为你的程序不会崩溃，但
 - 2)如果你想让程序在出现问题时崩溃，也许不好。
 
 但通常我们都不希望自己的程序崩溃，所以`unwrap_or`是个不错的方法。
@@ -4807,7 +4809,7 @@ let result = self.second_thing as u32 + self.first_thing
 
 或者我们想把`self.first_thing`放在`self.second_thing`旁边，说我们要这样加。所以如果我们把55加到33.4，我们要看到的是5533.4，而不是88.4。
 
-所以首先我们看一下如何创建一个trait。关于`trait`，要记住的重要一点是，它们是关于行为的。要创建一个trait，写`trait`，然后创建一些函数。
+所以首先我们看一下如何创建一个trait。关于`trait`，要记住的重要一点是，它们是关于行为的。要创建一个trait，写下单词`trait`，然后创建一些函数。
 
 ```rust
 struct Animal { // A simple struct - an Animal only has a name
@@ -5459,9 +5461,9 @@ Odd numbers: [7, -1, 3, 9787, -47, 77, 55, 7]
 
 像 `EvenOddVec` 这样的类型可能最好是通用 `T`，这样我们就可以使用许多数字类型。如果你想练习的话，你可以试着把这个例子做成通用的。
 
-### 在函数中取一个字符串和一个&str。
+### 在函数中使用字符串和&str
 
-有时你想让一个函数可以同时接受 `String` 和 `&str`。你可以通过属类和 `AsRef` 特性来实现这一点。`AsRef` 用于从一个类型向另一个类型提供引用。如果你看看 `String` 的文档，你可以看到它对许多类型都有 `AsRef`。
+有时你想让一个函数可以同时接受 `String` 和 `&str`。你可以通过泛型和 `AsRef` 特性来实现这一点。`AsRef` 用于从一个类型向另一个类型提供引用。如果你看看 `String` 的文档，你可以看到它对许多类型都有 `AsRef`。
 
 [https://doc.rust-lang.org/std/string/struct.String.html](https://doc.rust-lang.org/std/string/struct.String.html)
 
@@ -5522,8 +5524,8 @@ fn main() {
 }
 ```
 
-现在可以用了，打印出`Please print me`。这是好的，但T的东西还是会太多。
- 可以是`i8`，也可以是`f32`，其他的只要`Display`。所以我们加上`AsRef<str>`，现在T需要`AsRef<str>`和`Display`。
+现在可以用了，打印出`Please print me`。这是好的，但T仍然可以是多种类型。
+可以是`i8`，也可以是`f32`，或者其他任何实现了`Display`的类型。我们加上`AsRef<str>`，现在T需要`AsRef<str>`和`Display`。
 
 ```rust
 use std::fmt::Display;
@@ -5661,11 +5663,11 @@ fn main() {
 
 让我们再来看看它们，一次一个。
 
-首先我们用`.iter()`对`vector1`进行引用。我们给每个都加了1个，并使其成为一个新的Vec。`vector1`还活着，因为我们只用了引用:我们没有按值取。现在我们有 `vector1`，还有一个新的 Vec 叫 `vector1_a`。因为`.map()`只是传递了它，所以我们需要使用`.collect()`把它变成一个`Vec`。
+首先我们用`.iter()`对`vector1`进行引用。我们给每个元素都加了1，并使其成为一个新的Vec。`vector1`还活着，因为我们只用了引用:我们没有按值取。现在我们有 `vector1`，还有一个新的 Vec 叫 `vector1_a`。因为`.map()`只是传递了它，所以我们需要使用`.collect()`把它变成一个`Vec`。
 
 然后我们用`into_iter`从`vector1`中按值得到一个迭代器。这样就破坏了`vector1`，因为这就是`into_iter()`的作用。所以我们做了`vector1_b`之后，就不能再使用`vector1`了。
 
-最后我们用`.iter_mut()`来做`vector2`。它是可变的，所以我们不需要使用`.collect()`来创建一个新的Vec。相反，我们用可变引用改变同一Vec中的值。所以`vector2`仍然存在。因为我们不需要一个新的Vec，我们使用`for_each`:它就像一个`for`循环。
+最后我们在`vector2`上使用`.iter_mut()`。它是可变的，所以我们不需要使用`.collect()`来创建一个新的Vec。相反，我们用可变引用改变同一Vec中的值。所以`vector2`仍然存在。因为我们不需要一个新的Vec，我们使用`for_each`:它就像一个`for`循环。
 
 
 ### 迭代器如何工作
@@ -6158,7 +6160,7 @@ fn main() {
 
 
 
-`.filter_map()`. 这个叫做`filter_map()`，因为它做了`.filter()`和`.map()`。闭包必须返回一个 `Option<T>`，然后 `filter_map()` 如果是 `Some`，则从每个 `Option` 中取出值。所以比如说如果你是`.filter_map()`一个`vec![Some(2), None, Some(3)]`，它就会返回`[2, 3]`。
+`.filter_map()`. 这个叫做`filter_map()`，因为它做了`.filter()`和`.map()`。闭包必须返回一个 `Option<T>`，然后对每个`Option`, 如果是 `Some`, `filter_map()`将取出它的值。所以比如说你`.filter_map()`一个`vec![Some(2), None, Some(3)]`，它就会返回`[2, 3]`。
 
 我们将用一个`Company`结构体来写一个例子。每个公司都有一个`name`，所以这个字段是`String`，但是CEO可能最近已经辞职了。所以`ceo`字段是`Option<String>`。我们会`.filter_map()`过一些公司，只保留CEO名字。
 
@@ -6221,7 +6223,7 @@ fn main() {
 }
 ```
 
-这印有`[8.9, 8.0, 7.6]`。
+将打印: `[8.9, 8.0, 7.6]`。
 
 与`.ok()`相对的是`.ok_or()`和`ok_or_else()`。这样就把`Option`变成了`Result`。之所以叫`.ok_or()`，是因为`Result`给出了一个`Ok`**或**`Err`，所以你必须让它知道`Err`的值是多少。这是因为`None`中的`Option`没有任何信息。另外，你现在可以看到，这些方法名称中的*else*部分意味着它有一个闭包。
 
@@ -6651,7 +6653,7 @@ fn main() {
 
 `.chunks()`和`.windows()`是将矢量切割成你想要的尺寸的两种方法。你把你想要的尺寸放在括号里。比如说你有一个有10个元素的矢量，你想要一个3的尺寸，它的工作原理是这样的。
 
-- `.chunks()`会给你4个切片: [0, 1, 2], 然后是[3, 4, 5], 然后是[6, 7, 8], 最后是[9]. 所以它会尝试用三个元素创建一个切片，但如果它没有三个元素，那么它就不会慌张。它只会给你剩下的东西。
+- `.chunks()`会给你4个切片: [0, 1, 2], 然后是[3, 4, 5], 然后是[6, 7, 8], 最后是[9]. 所以它会尝试用三个元素创建一个切片，但如果它没有三个元素，那么它就不会崩溃。它只会给你剩下的东西。
 
 - `.windows()`会先给你一个[0, 1, 2]的切片。然后它将移过一片，给你[1, 2, 3]。它将一直这样做，直到最后到达3的最后一片，然后停止。
 
@@ -7067,7 +7069,7 @@ fn main() {
 
 这是因为我们返回了一个 `&str`，生命期为 `static`。同时，`my_string`只能以`String`的形式返回:我们不能返回对它的引用，因为它将在下一行死亡。
 
-所以现在`fn returns_str() -> &'static str`告诉Rust， "别担心，我们只会返回一个字符串字面意义". 字符串的字面意义在整个程序中都是有效的，所以Rust很高兴。你会注意到，这与泛型类似。当我们告诉编译器类似 `<T: Display>` 的东西时，我们承诺我们将只使用 `Display` 的输入。生命期也类似:我们并没有改变任何变量的生命期。我们只是告诉编译器输入的生命期是多少。
+所以现在`fn returns_str() -> &'static str`告诉Rust， "别担心，我们只会返回一个字符串字面量". 字符串字面量在整个程序中都是有效的，所以Rust很高兴。你会注意到，这与泛型类似。当我们告诉编译器类似 `<T: Display>` 的东西时，我们承诺我们将只使用实现了 `Display` 的输入。生命期也类似:我们并没有改变任何变量的生命期。我们只是告诉编译器输入的生命期是多少。
 
 但是`'static`并不是唯一的生命期。实际上，每个变量都有一个生命期，但通常我们不必写出来。编译器很聪明，一般都能自己算出来。只有在编译器不知道的时候，我们才需要写出生命期。
 
@@ -7125,7 +7127,7 @@ fn main() {
 }
 ```
 
-好的，这就可以了。也许这就是你想要的结构。但是，请注意，我们只能接受 "字符串字面"，所以不能接受对其他东西的引用。所以这将无法工作。
+好的，这就可以了。也许这就是你想要的结构。但是，请注意，我们只能接受 "字符串字面量"，所以不能接受对其他东西的引用。所以这将无法工作。
 
 ```rust
 #[derive(Debug)]
@@ -7164,7 +7166,7 @@ error[E0597]: `city_names` does not live long enough
 
 这一点很重要，因为我们给它的引用其实已经够长寿了。但是我们承诺只给它一个`&'static str`，这就是问题所在。
 
-所以现在我们就试试之前编译器的建议。它说尝试写`struct City<'a>`和`name: &'a str`。这就意味着，只有当`name`活到`City`的时候，它才会接受`name`的引用。
+所以现在我们就试试之前编译器的建议。它说尝试写`struct City<'a>`和`name: &'a str`。这就意味着，只有当`name`活到`City`一样寿命的情况下，它才会接受`name`的引用。
 
 ```rust
 #[derive(Debug)]
@@ -7326,7 +7328,7 @@ help: consider introducing a named lifetime parameter
   |
 ```
 
-它建议怎么做:`<'a>`后冒险者，`&'a str`。所以我们就这么做。
+它建议怎么做:在Adventurer后面加上`<'a>`，以及`&'a str`。所以我们就这么做。
 
 ```rust
 // ⚠️
@@ -7514,7 +7516,7 @@ fn main() {
 
 `RefCell`的方法有很多。其中两种是`.borrow()`和`.borrow_mut()`。使用这些方法，你可以做与`&`和`&mut`相同的事情。规则都是一样的:
 
-- 多个借用可以
+- 多个不可变借用可以
 - 一个可变的借用可以
 - 但mutable和immutable借用在一起是不行的
 
@@ -7798,7 +7800,7 @@ fn main() {}
 
 而如果你给它一个`format!("{}", "My message").into()`，那么它就会查看类型。这次是一个`String`，因为`format!`创建了`String`。所以这次会选择 "Owned"。
 
-下面是一个测试`Cow`的例子。我们将把一个数字放入一个函数中，返回一个`Cow<'static, str>`。根据这个数字，它会创建一个`&str`或`String`。然后它使用`.into()`将其变成`Cow`。这样做的时候，它就会选择`Cow:::Borrowed`或者`Cow::Owned`。那我们就匹配一下，看看它选的是哪一个。
+下面是一个测试`Cow`的例子。我们将把一个数字放入一个函数中，返回一个`Cow<'static, str>`。根据这个数字，它会创建一个`&str`或`String`。然后它使用`.into()`将其变成`Cow`。这样做的时候，它就会选择`Cow::Borrowed`或者`Cow::Owned`。那我们就匹配一下，看看它选的是哪一个。
 
 ```rust
 use std::borrow::Cow;
