@@ -4081,7 +4081,7 @@ pub fn entry(&mut self, key: K) -> Entry<K, V> // 🚧
 ```
 
 
-[Entry文档页](https://doc.rust-lang.org/std/collections/hash_map/enum.Entry.html)。下面是其代码的简单版本。`K`表示key，`V`表示变量。
+[Entry文档页](https://doc.rust-lang.org/std/collections/hash_map/enum.Entry.html)。下面是其代码的简单版本。`K`表示key，`V`表示value。
 
 ```rust
 // 🚧
@@ -4771,7 +4771,7 @@ fn main() {
 
 ## 特性
 
-我们以前见过trait:`Debug`、`Copy`、`Clone`都是trait。要给一个类型一个trait，就必须实现它。因为`Debug`和其他的trait都很常见，所以我们有自动实现的属性。这就是你写`#[derive(Debug)]`的情况:你是自动实现了`Debug`。
+我们以前见过trait:`Debug`、`Copy`、`Clone`都是trait。要给一个类型一个trait，就必须实现它。因为`Debug`和其他的trait都很常见，所以我们有自动实现的属性。这就是当你写下`#[derive(Debug)]`所发生的事情:你自动实现了`Debug`。
 
 ```rust
 #[derive(Debug)]
@@ -8001,7 +8001,7 @@ fn give_direction(direction: &MapDirection) {
 }
 ```
 
-我们已经看到`::*`的意思是 "导入::之后的所有内容"。在我们的例子中，这意味着`North`，`NorthEast`......一直到`NorthWest`。当你导入别人的代码时，你也可以这样做，但如果代码非常大，你可能会有问题。如果它有一些元素和你的代码是一样的呢？所以一般情况下最好不要一直使用`::*`，除非你有把握。很多时候你在别人的代码里看到一个叫`prelude`的部分，里面有你可能需要的所有主要元素。那么你通常会这样使用:`name::predule::*`。 我们将在 `modules` 和 `crates` 的章节中更多地讨论这个问题。
+我们已经看到`::*`的意思是 "导入::之后的所有内容"。在我们的例子中，这意味着`North`，`NorthEast`......一直到`NorthWest`。当你导入别人的代码时，你也可以这样做，但如果代码非常大，你可能会有问题。如果它有一些元素和你的代码是一样的呢？所以一般情况下最好不要一直使用`::*`，除非你有把握。很多时候你在别人的代码里看到一个叫`prelude`的部分，里面有你可能需要的所有主要元素。那么你通常会这样使用:`name::prelude::*`。 我们将在 `modules` 和 `crates` 的章节中更多地讨论这个问题。
 
 您也可以使用 `as` 来更改名称。例如，也许你正在使用别人的代码，而你不能改变枚举中的名称。
 
