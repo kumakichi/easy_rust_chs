@@ -1769,7 +1769,7 @@ fn main() {
 
 所以说`let my_number = { 100 };`差不多。
 
-另外注意，`my_number`不是`mut`。我们在给它50之前并没有给它一个值，所以它的值一直没有改变。最后，`my_number`的真正代码只是让`my_number = 100;`。
+另外注意，`my_number`不是`mut`。我们在给它50之前并没有给它一个值，所以它的值一直没有改变。最后，`my_number`的真正代码只是`let my_number = 100;`。
 
 ## 集合类型
 
@@ -3545,7 +3545,10 @@ fn main() {
 }
 ```
 
-消息是: "thread 'main' panicked at 'called `Option::unwrap()` on a `None` value', src\main.rs:14:9".
+消息是: 
+```text
+thread 'main' panicked at 'called `Option::unwrap()` on a `None` value', src\main.rs:14:9
+```
 
 但我们不需要使用`.unwrap()`。我们可以使用`match`。那么我们就可以把我们有`Some`的值打印出来，如果有`None`的值就不要碰。比如说
 
@@ -3671,7 +3674,7 @@ enum Result<T, E> {
 fn main() {}
 ```
 
-所以Result在 `Ok` 里面有一个值，在 `Err` 里面有一个值。这是因为错误通常(应该有)有信息在里面。
+所以Result在 "Ok "里面有一个值，在 "Err "里面有一个值。这是因为错误通常包含描述错误的信息。
 
 `Result<T, E>`的意思是你要想好`Ok`要返回什么，`Err`要返回什么。其实，你可以决定任何事情。甚至这个也可以。
 
@@ -5632,7 +5635,7 @@ fn main() {
 - `.iter_mut()` 可变引用的迭代器
 - `.into_iter()` 值的迭代器(不是引用)
 
-`for`循环其实只是一个使用`.iter_mut()`的迭代器。这就是为什么你在使用它的时候可以改变值的原因。
+`for`循环其实只是一个拥有值的迭代器。这就是为什么可以让它变得可变，然后你可以在使用的时候改变值。
 
 我们可以这样使用迭代器。
 
@@ -6688,6 +6691,7 @@ fn main() {
 [5, 6, 7]
 [6, 7, 8]
 [7, 8, 9]
+[8, 9, 0]
 ```
 
 顺便说一下，如果你什么都不给它，`.chunks()`会崩溃。你可以为一个只有一项的向量写`.chunks(1000)`，但你不能为任何长度为0的东西写`.chunks()`。 如果你点击[src]，你可以在函数中看到这一点，因为它说`assert!(chunk_size != 0);`。
@@ -8744,19 +8748,19 @@ fn map<B, F>(self, f: F) -> Map<Self, F>     // 🚧
 
 `fn map<B, F>(self, f: F)`的意思是，它需要两个通用类型。`F`是指从实现`.map()`的容器中取一个元素的函数，`B`是该函数的返回类型。然后在`where`之后，我们看到的是trait bound。("trait bound"的意思是 "它必须有这个trait"。)一个是`Sized`，接下来是闭包签名。它必须是一个 `FnMut`，并在 `Self::Item` 上做闭包，也就是你给它的迭代器。然后它返回`B`。
 
-所以我们可以用同样的方法来返回一个闭包。要返回一个闭包，使用 `impl`，然后使用闭包签名。一旦你返回它，你就可以像函数一样使用它。下面是一个函数的小例子，它根据你输入的数字给你一个闭包。如果你输入的是 2 或 40，那么它就会将其相乘，否则就会给你相同的数字。因为它是一个闭包函数，我们可以做任何我们想做的事情，所以我们也打印一条信息。
+所以我们可以用同样的方法来返回一个闭包。要返回一个闭包，使用 `impl`，然后是闭包签名。一旦你返回它，你就可以像使用一个函数一样使用它。下面是一个函数的小例子，它根据你输入的文本给出一个闭包。如果你输入 "double "或 "triple"，那么它就会把它乘以2或3，否则就会返给你相同的数字。因为它是一个闭包，我们可以做任何我们想做的事情，所以我们也打印一条信息。
 
 ```rust
-fn returns_a_closure(input: u8) -> impl FnMut(i32) -> i32 {
+fn returns_a_closure(input: &str) -> impl FnMut(i32) -> i32 {
     match input {
-        2 => |mut number| {
+        "double" => |mut number| {
             number *= 2;
-            println!("Your number is {}", number);
+            println!("Doubling number. Now it is {}", number);
             number
         },
-        40 => |mut number| {
+        "triple" => |mut number| {
             number *= 40;
-            println!("Your number is {}", number);
+            println!("Tripling number. Now it is {}", number);
             number
         },
         _ => |number| {
@@ -8770,13 +8774,13 @@ fn main() {
     let my_number = 10;
 
     // Make three closures
-    let mut give_two = returns_a_closure(2);
-    let mut give_forty = returns_a_closure(40);
-    let mut give_fifty = returns_a_closure(50);
+    let mut doubles = returns_a_closure("double");
+    let mut triples = returns_a_closure("triple");
+    let mut quadruples = returns_a_closure("quadruple");
 
-    give_two(my_number);
-    give_forty(my_number);
-    give_fifty(my_number);
+    doubles(my_number);
+    triples(my_number);
+    quadruples(my_number);
 }
 ```
 
@@ -9238,38 +9242,54 @@ fn main() {
 
 现在结果在我们的vec中:`["Send a &str this time", "And here is another &str"]`。
 
-现在让我们假设我们有很多工作要做，并且想要使用线程。我们有一个大的VEC，里面有1000个元素，都是0，我们想把每个0都变成1，我们将使用10个线程，每个线程将做十分之一的工作。我们将创建一个新的VEC，并使用`.extend()`来收集结果。
+现在让我们假设我们有很多工作要做，并且想要使用线程。我们有一个大的VEC，里面有1百万个元素，都是0，我们想把每个0都变成1，我们将使用10个线程，每个线程将做十分之一的工作。我们将创建一个新的VEC，并使用`.extend()`来收集结果。
 
 ```rust
 use std::sync::mpsc::channel;
+use std::thread::spawn;
 
 fn main() {
     let (sender, receiver) = channel();
-    let hugevec = vec![0; 1000];
+    let hugevec = vec![0; 1_000_000];
     let mut newvec = vec![];
+    let mut handle_vec = vec![];
 
     for i in 0..10 {
         let sender_clone = sender.clone();
         let mut work: Vec<u8> = Vec::with_capacity(hugevec.len() / 10); // new vec to put the work in. 1/10th the size
-        work.extend(&hugevec[i*100..(i+1)*100]); // first part gets 0..100, next gets 100..200, etc.
-        let handle = std::thread::spawn(move || { // make a handle
+        work.extend(&hugevec[i*100_000..(i+1)*100_000]); // first part gets 0..100_000, next gets 100_000..200_000, etc.
+        let handle =spawn(move || { // make a handle
 
             for number in work.iter_mut() { // do the actual work
                 *number += 1;
             };
             sender_clone.send(work).unwrap(); // use the sender_clone to send the work to the receiver
         });
+        handle_vec.push(handle);
+    }
 
-        handle.join().unwrap(); // stop the thread until it's done
-        newvec.push(receiver.recv().unwrap()); // push the results from receiver.recv() into the vec
+    for handle in handle_vec { // stop until the threads are done
+        handle.join().unwrap();
+    }
+
+    while let Ok(results) = receiver.try_recv() {
+        newvec.push(results); // push the results from receiver.recv() into the vec
     }
 
     // Now we have a Vec<Vec<u8>>. To put it together we can use .flatten()
-    let newvec = newvec.into_iter().flatten().collect::<Vec<u8>>(); // Now it's one vec of 1000 u8 numbers
+    let newvec = newvec.into_iter().flatten().collect::<Vec<u8>>(); // Now it's one vec of 1_000_000 u8 numbers
+
+    println!("{:?}, {:?}, total length: {}", // Let's print out some numbers to make sure they are all 1
+        &newvec[0..10], &newvec[newvec.len()-10..newvec.len()], newvec.len() // And show that the length is 1_000_000 items
+    );
+
+    for number in newvec { // And let's tell Rust that it can panic if even one number is not 1
+        if number != 1 {
+            panic!();
+        }
+    }
 }
 ```
-
-如果你打印这个，你可以看到1000个1。
 
 ## 阅读Rust文档
 
@@ -10323,8 +10343,10 @@ impl<T> Deref for DerefExample<T> {
     }
 }
 
-let x = DerefExample { value: 'a' };
-assert_eq!('a', *x);
+fn main() {
+    let x = DerefExample { value: 'a' };
+    assert_eq!('a', *x);
+}
 ```
 
 
@@ -10907,7 +10929,38 @@ test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out
              at src/lib.rs:2
 ```
 
-所以我们再把backtrace关闭，回到常规测试。现在我们要写一些其他函数，并使用测试函数来测试它们。这里有几个。
+编辑：Rust在2021年初改进了其回溯信息，只显示最有意义的信息。现在它更容易阅读。
+
+```text
+failures:
+
+---- two_is_two stdout ----
+thread 'two_is_two' panicked at 'assertion failed: `(left == right)`
+  left: `2`,
+ right: `3`', src/lib.rs:3:5
+stack backtrace:
+   0: rust_begin_unwind
+             at /rustc/cb75ad5db02783e8b0222fee363c5f63f7e2cf5b/library/std/src/panicking.rs:493:5
+   1: core::panicking::panic_fmt
+             at /rustc/cb75ad5db02783e8b0222fee363c5f63f7e2cf5b/library/core/src/panicking.rs:92:14
+   2: playground::two_is_two
+             at ./src/lib.rs:3:5
+   3: playground::two_is_two::{{closure}}
+             at ./src/lib.rs:2:1
+   4: core::ops::function::FnOnce::call_once
+             at /rustc/cb75ad5db02783e8b0222fee363c5f63f7e2cf5b/library/core/src/ops/function.rs:227:5
+   5: core::ops::function::FnOnce::call_once
+             at /rustc/cb75ad5db02783e8b0222fee363c5f63f7e2cf5b/library/core/src/ops/function.rs:227:5
+note: Some details are omitted, run with `RUST_BACKTRACE=full` for a verbose backtrace.
+
+
+failures:
+    two_is_two
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+```
+
+现在我们再把回溯关闭，回到常规测试。现在我们要写一些其他函数，并使用测试函数来测试它们。这里有几个:
 
 ```rust
 fn return_two() -> i8 {
@@ -10991,7 +11044,7 @@ mod tests {
     }
     #[test]
     fn one_minus_minus_one_is_two() {
-        assert_eq!(math("1 - -1), 2);
+        assert_eq!(math("1 - -1"), 2);
     }
 }
 ```
@@ -11017,7 +11070,7 @@ test tests::one_plus_one_is_two ... FAILED
 const OKAY_CHARACTERS: &str = "1234567890+- "; // Don't forget the space at the end
 
 fn math(input: &str) -> i32 {
-    if let false = input.chars().all(|character| OKAY_CHARACTERS.contains(character)) {
+    if !input.chars().all(|character| OKAY_CHARACTERS.contains(character)) {
         panic!("Please only input numbers, +-, or spaces");
     }
     6 // we still return a 6 for now
@@ -11079,11 +11132,13 @@ test tests::one_plus_one_is_two ... FAILED
 const OKAY_CHARACTERS: &str = "1234567890+- ";
 
 fn math(input: &str) -> i32 {
-    if let false = input.chars().all(|character| OKAY_CHARACTERS.contains(character)) {
-        panic!("Please only input numbers, +-, or spaces");
+    if !input.chars().all(|character| OKAY_CHARACTERS.contains(character)) ||
+       !input.chars().take(2).any(|character| character.is_numeric())
+    {
+        panic!("Please only input numbers, +-, or spaces.");
     }
 
-    let input = input.trim_end_matches(|x| "+-".contains(x)).chars().filter(|x| *x != ' ').collect::<String>(); // Remove + and - at the end, and all spaces
+    let input = input.trim_end_matches(|x| "+- ".contains(x)).chars().filter(|x| *x != ' ').collect::<String>(); // Remove + and - at the end, and all spaces
     let mut result_vec = vec![]; // Results go in here
     let mut push_string = String::new(); // This is the string we push in every time. We will keep reusing it in the loop.
     for character in input.chars() {
@@ -11122,7 +11177,10 @@ fn math(input: &str) -> i32 {
     while let Some(entry) = math_iter.next() { // Iter through the items
         if entry.contains('-') { // If it has a - character, check if it's even or odd
             if entry.chars().count() % 2 == 1 {
-                adds = false;
+                adds = match adds {
+                    true => false,
+                    false => true
+                };
                 continue; // Go to the next item
             } else {
                 continue;
@@ -11220,8 +11278,6 @@ warning: equality checks against true are unnecessary
 
 这是真的:`for entry in math_iter`比`while let Some(entry) = math_iter.next()`简单得多。而`for`循环实际上是一个迭代器，所以我们没有任何理由写`.iter()`。谢谢你，clippy! 而且我们也不需要做`math_iter`:我们可以直接写`for entry in result_vec`。
 
-而第二点也是真的:`if adds == true`可以直接写成`if adds`(因为`adds`=`true`)。
-
 现在我们将开始一些真正的重构。我们将创建一个 `Calculator` 结构体，而不是单独的变量。这将拥有我们使用的所有变量。我们将改变两个名字以使其更加清晰。`result_vec`将变成`results`，`push_string`将变成`current_input`(current的意思是 "现在")。而到目前为止，它只有一种方法:new。
 
 ```rust
@@ -11271,11 +11327,12 @@ impl Calculator {
 const OKAY_CHARACTERS: &str = "1234567890+- ";
 
 fn math(input: &str) -> i32 {
-    if let false = input.chars().all(|character| OKAY_CHARACTERS.contains(character)) {
+    if !input.chars().all(|character| OKAY_CHARACTERS.contains(character)) ||
+       !input.chars().take(2).any(|character| character.is_numeric()) {
         panic!("Please only input numbers, +-, or spaces");
     }
 
-    let input = input.trim_end_matches(|x| "+-".contains(x)).chars().filter(|x| *x != ' ').collect::<String>();
+    let input = input.trim_end_matches(|x| "+- ".contains(x)).chars().filter(|x| *x != ' ').collect::<String>();
     let mut calculator = Calculator::new();
 
     for character in input.chars() {
@@ -11311,7 +11368,10 @@ fn math(input: &str) -> i32 {
     for entry in calculator.results {
         if entry.contains('-') {
             if entry.chars().count() % 2 == 1 {
-                calculator.adds = false;
+                calculator.adds = match calculator.adds {
+                    true => false,
+                    false => true
+                };
                 continue;
             } else {
                 continue;
@@ -11392,11 +11452,12 @@ impl Calculator {
 const OKAY_CHARACTERS: &str = "1234567890+- ";
 
 fn math(input: &str) -> i32 {
-    if let false = input.chars().all(|character| OKAY_CHARACTERS.contains(character)) {
+    if !input.chars().all(|character| OKAY_CHARACTERS.contains(character)) ||
+       !input.chars().take(2).any(|character| character.is_numeric()) {
         panic!("Please only input numbers, +-, or spaces");
     }
 
-    let input = input.trim_end_matches(|x| "+-".contains(x)).chars().filter(|x| *x != ' ').collect::<String>();
+    let input = input.trim_end_matches(|x| "+- ".contains(x)).chars().filter(|x| *x != ' ').collect::<String>();
     let mut calculator = Calculator::new();
 
     for character in input.chars() {
@@ -11432,7 +11493,10 @@ fn math(input: &str) -> i32 {
     for entry in calculator.results {
         if entry.contains('-') {
             if entry.chars().count() % 2 == 1 {
-                calculator.adds = false;
+                calculator.adds = match calculator.adds {
+                    true => false,
+                    false => true
+                };
                 continue;
             } else {
                 continue;
@@ -11603,7 +11667,7 @@ fn three_die_six() -> u8 { // A "die" is the thing you throw to get the number
     let mut generator = thread_rng(); // Create our random number generator
     let mut stat = 0; // This is the total
     for _ in 0..3 {
-        stat += generator.gen_range(1, 7); // Add each time
+        stat += generator.gen_range(1..=6); // Add each time
     }
     stat // Return the total
 }
@@ -11612,17 +11676,22 @@ fn four_die_six() -> u8 {
     let mut generator = thread_rng();
     let mut results = vec![]; // First put the numbers in a vec
     for _ in 0..4 {
-        results.push(generator.gen_range(1, 7));
+        results.push(generator.gen_range(1..=6));
     }
     results.sort(); // Now a result like [4, 3, 2, 6] becomes [2, 3, 4, 6]
     results.remove(0); // Now it would be [3, 4, 6]
     results.iter().sum() // Return this result
 }
 
+enum Dice {
+    Three,
+    Four
+}
+
 impl Character {
-    fn new(three_dice: bool) -> Self { // true for three dice, false for four
-        match three_dice {
-            true => Self {
+    fn new(dice: Dice) -> Self { // true for three dice, false for four
+        match dice {
+            Dice::Three => Self {
                 strength: three_die_six(),
                 dexterity: three_die_six(),
                 constitution: three_die_six(),
@@ -11630,7 +11699,7 @@ impl Character {
                 wisdom: three_die_six(),
                 charisma: three_die_six(),
             },
-            false => Self {
+            Dice::Four => Self {
                 strength: four_die_six(),
                 dexterity: four_die_six(),
                 constitution: four_die_six(),
@@ -11670,8 +11739,8 @@ charisma: {}",
 
 
 fn main() {
-    let weak_billy = Character::new(true);
-    let strong_billy = Character::new(false);
+    let weak_billy = Character::new(Dice::Three);
+    let strong_billy = Character::new(Dice::Four);
     weak_billy.display();
     strong_billy.display();
 }
@@ -11854,7 +11923,7 @@ fn main() {
     // This will try 40,000 times to make a char from a u32.
     // The range is 0 (std::u32::MIN) to u32's highest number (std::u32::MAX). If it doesn't work, we will give it '-'.
     for _ in 0..40_000 {
-        let bigger_character = char::try_from(random_generator.gen_range(std::u32::MIN, std::u32::MAX)).unwrap_or('-');
+        let bigger_character = char::try_from(random_generator.gen_range(std::u32::MIN..std::u32::MAX)).unwrap_or('-');
         print!("{}", bigger_character)
     }
 }
@@ -12102,6 +12171,52 @@ fn main() {
 
 这打印的是一样的东西。
 
+从Rust 1.50(2021年2月发布)开始，有一个叫做 `then()`的方法，它将一个 `bool`变成一个 `Option`。使用`then()`时需要一个闭包，如果item是`true`，闭包就会被调用。同时，无论从闭包中返回什么，都会进入`Option`中。下面是一个小例子:
+
+```rust
+fn main() {
+
+    let (tru, fals) = (true.then(|| 8), false.then(|| 8));
+    println!("{:?}, {:?}", tru, fals);
+}
+```
+
+这个打印 `Some(8), None`。
+
+下面是一个较长的例子:
+
+```rust
+fn main() {
+    let bool_vec = vec![true, false, true, false, false];
+
+    let option_vec = bool_vec
+        .iter()
+        .map(|item| {
+            item.then(|| { // Put this inside of map so we can pass it on
+                println!("Got a {}!", item);
+                "It's true, you know" // This goes inside Some if it's true
+                                      // Otherwise it just passes on None
+            })
+        })
+        .collect::<Vec<_>>();
+
+    println!("Now we have: {:?}", option_vec);
+
+    // That printed out the Nones too. Let's filter map them out in a new Vec.
+    let filtered_vec = option_vec.into_iter().filter_map(|c| c).collect::<Vec<_>>();
+
+    println!("And without the Nones: {:?}", filtered_vec);
+}
+```
+
+将打印:
+
+```text
+Got a true!
+Got a true!
+Now we have: [Some("It\'s true, you know"), None, Some("It\'s true, you know"), None, None]
+And without the Nones: ["It\'s true, you know", "It\'s true, you know"]
+```
 
 ### Vec
 
@@ -12927,7 +13042,7 @@ The last country is Portugal inside the module rust_book::something::third_mod
 
 ```rust
 fn main() {
-    let helpful_message = if cfg!(windows) { "backslash" } else { "slash" };
+    let helpful_message = if cfg!(target_os = "windows") { "backslash" } else { "slash" };
 
     println!(
         "...then in your hard drive, type the directory name followed by a {}. Then you...",
@@ -13634,7 +13749,7 @@ use std::env::args;
 fn main() {
     let input = args();
 
-    input.into_iter().skip(1).for_each(|item| {
+    input.skip(1).for_each(|item| {
         println!("You wrote {}, which in capital letters is {}", item, item.to_uppercase());
     })
 }
@@ -13655,20 +13770,32 @@ You wrote words, which in capital letters is WORDS
 ```rust
 use std::env::args;
 
-fn main() {
-    let keywords = ["capital".to_string(), "lowercase".to_string()]; // User needs to write one of these after cargo run
-    let input_vec = args().into_iter().collect::<Vec<String>>(); // Make a vec of all the args
+enum Letters {
+    Capitalize,
+    Lowercase,
+    Nothing,
+}
 
-    if input_vec.len() > 2 && keywords.contains(&input_vec[1].to_lowercase()) { // It must be at least 3 in length, and the user needs to write either "capital" or "lowercase".
-                                                                                // We use .to_lowercase() so the user can write "Capital" or "CAPITAL", etc.
-        if input_vec[1].to_lowercase() == "capital" {
-            input_vec.into_iter().skip(2).for_each(|word| println!("{}", word.to_uppercase()));
-        } else {
-            input_vec.into_iter().skip(2).for_each(|word| println!("{}", word.to_lowercase()));
+fn main() {
+    let mut changes = Letters::Nothing;
+    let input = args().collect::<Vec<_>>();
+
+    if input.len() > 2 {
+        match input[1].as_str() {
+            "capital" => changes = Letters::Capitalize,
+            "lowercase" => changes = Letters::Lowercase,
+            _ => {}
         }
-    } else {
-        println!(r#"Please write either "capital" or "lowercase" and then some input."#);
     }
+
+    for word in input.iter().skip(2) {
+      match changes {
+        Letters::Capitalize => println!("{}", word.to_uppercase()),
+        Letters::Lowercase => println!("{}", word.to_lowercase()),
+        _ => println!("{}", word)
+      }
+    }
+
 }
 ```
 
@@ -13677,13 +13804,13 @@ fn main() {
 输入: `cargo run please make capitals`:
 
 ```text
-Please write either "capital" or "lowercase" and then some input.
+make capitals
 ```
 
 输入:`cargo run capital`:
 
 ```text
-Please write either "capital" or "lowercase" and then some input.
+// Nothing here...
 ```
 
 输入:`cargo run capital I think I understand now`:
