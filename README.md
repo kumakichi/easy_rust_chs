@@ -291,26 +291,33 @@ fn main() {
 
 我们再来了解一下`char`。你看到`char`总是一个字符，并且使用`''`而不是`""`。
 
-所有的字符都是4个字节。它们是4个字节，因为一个字符串中的一些字符是超过一个字节的。计算机上的基本字母一直是1个字节，后来的字符是2个字节，其他的是3个字节和4个字节。`char`需要4个字节，这样才能容纳任何一种字符。
+所有的 `字符` 都使用4个字节的内存，因为4个字节足以容纳任何种类的字符:
+- 基本字母和符号通常需要4个字节中的1个：`a b 1 2 + - = $ @`
+- 其他字母，如德语的 Umlauts 或重音，需要4个字节中的2个： `ä ö ü ß è é à ñ`
+- 韩文、日文或中文字符需要3或4个字节： `国 안 녕`
+
+当使用字符作为字符串的一部分时，字符串被编码以使用每个字符所需的最小内存量。
 
 我们可以用`.len()`来看一下。
 
 ```rust
 fn main() {
-    println!("{}", "a".len()); // .len() gives the size in bytes
-    println!("{}", "ß".len());
-    println!("{}", "国".len());
-    println!("{}", "𓅱".len());
+    println!("Size of a char: {}", std::mem::size_of::<char>()); // 4 bytes
+    println!("Size of string containing 'a': {}", "a".len()); // .len() gives the size of the string in bytes
+    println!("Size of string containing 'ß': {}", "ß".len());
+    println!("Size of string containing '国': {}", "国".len());
+    println!("Size of string containing '𓅱': {}", "𓅱".len());
 }
 ```
 
 这样打印出来。
 
 ```text
-1
-2
-3
-4
+Size of a char: 4
+Size of string containing 'a': 1
+Size of string containing 'ß': 2
+Size of string containing '国': 3
+Size of string containing '𓅱': 4
 ```
 
 可以看到，`a`是一个字节，德文的`ß`是两个字节，日文的`国`是三个字节，古埃及的`𓅱`是4个字节。
@@ -1304,10 +1311,10 @@ fn main() {
 
 ## const和static
 
-有两种类型不用`let`来声明: `const`和`static`。另外，Rust不会使用类型推导:你需要为它们写类型。这些都是针对不会改变的变量(`const`的意思是常量), 不同的是:
+有两种声明值的方法，不仅仅是用`let`。它们是`const`和`static`。另外，Rust不会使用类型推理：你需要为它们编写类型。这些都是用于不改变的值（`const`意味着常量）。区别在于:
 
-- `const`是一个不会改变的值
-- `static`是一个不会改变的值，并且有一个固定的内存位置
+- `const`是用于不改变的值，当使用它时，名字会被替换成值。
+- `static`与`const`类似，但有一个固定的内存位置，可以作为一个全局变量使用。
 
 所以它们几乎是一样的。Rust程序员几乎总是使用`const`。
 
@@ -3528,7 +3535,7 @@ fn main() {
 ```rust
 // ⚠️
 fn take_fifth(value: Vec<i32>) -> Option<i32> {
-    if value.len() < 4 {
+    if value.len() < 5 {
         None
     } else {
         Some(value[4])
@@ -3554,7 +3561,7 @@ thread 'main' panicked at 'called `Option::unwrap()` on a `None` value', src\mai
 
 ```rust
 fn take_fifth(value: Vec<i32>) -> Option<i32> {
-    if value.len() < 4 {
+    if value.len() < 5 {
         None
     } else {
         Some(value[4])
@@ -3619,7 +3626,7 @@ None(value) => println!("The value is {}", value),
 
 ```rust
 fn take_fifth(value: Vec<i32>) -> Option<i32> {
-    if value.len() < 4 {
+    if value.len() < 5 {
         None
     } else {
         Some(value[4])
@@ -12982,6 +12989,7 @@ warning: unreachable pattern
 这四个宏有点像`dbg!()`，因为你只是把它们放进代码去给你调试信息。但是它们不需要任何变量--你只需要用它们和括号一起使用，而没有其他的东西。它们放到一起很容易学:
 
 - `column!()`给你写的那一列
+- `file!()`给你写的文件的名称
 - `line!()`给你写的那行字，然后是
 - `module_path!()`给你模块的位置。
 
@@ -13003,6 +13011,9 @@ pub mod something {
 fn main() {
     use something::third_mod::*;
     let mut country_vec = vec!["Portugal", "Czechia", "Finland"];
+
+    // do some stuff
+    println!("Hello from file {}", file!());
 
     // do some stuff
     println!(
@@ -13029,8 +13040,9 @@ fn main() {
 它打印的是这样的。
 
 ```text
-On line 20 we got the country Finland
-The next country is Czechia on line 29 and column 9.
+Hello from file src/main.rs
+On line 23 we got the country Finland
+The next country is Czechia on line 32 and column 9.
 The last country is Portugal inside the module rust_book::something::third_mod
 ```
 
@@ -13834,7 +13846,7 @@ too?
 
 
 
-除了`Args`中用户给出的`std::env`，还有`Vars`是系统变量。这些都是用户没有输入的程序的基本设置。你可以用`std::env::vars()`把它们都看成一个`(String, String)`。这个有非常多，比如说:
+除了用户给出的 `Args`，在 `std::env::args()` 中可用，还有系统变量`Vars`。这些都是用户没有输入的程序的基本设置。你可以用`std::env::vars()`把它们都看成一个`(String, String)`。这个有非常多，比如说:
 
 ```rust
 fn main() {
@@ -13880,14 +13892,13 @@ fn main() {
 
 所以如果你需要这些信息，`Vars`就是你想要的。
 
-最简单的方法是使用`env!`宏来获取单个`Var`。你只要把变量的名字放在里面就可以了。
- 它将给你一个`&str`。但如果变量是错误的，它将不会工作，所以如果你不确定，然后使用`option_env!`代替。如果我们在Playground上写这个:
+获得单个`Var'的最简单方法是使用`env!`宏。你只要给它变量的名字，它就会给你一个`&str'的值。如果变量拼写错误或不存在，它就不起作用，所以如果你不确定，就用`option_env!`代替。如果我们在Playground上写这个:
 
 ```rust
 fn main() {
     println!("{}", env!("USER"));
-    println!("{}", option_env!("ROOT").unwrap_or("Didn't work"));
-    println!("{}", option_env!("CARGO").unwrap_or("Didn't work"));
+    println!("{}", option_env!("ROOT").unwrap_or("Can't find ROOT"));
+    println!("{}", option_env!("CARGO").unwrap_or("Can't find CARGO"));
 }
 ```
 
@@ -13895,7 +13906,7 @@ fn main() {
 
 ```text
 playground
-Didn't work
+Can't find ROOT
 /playground/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo
 ```
 
@@ -13936,7 +13947,7 @@ error[E0308]: mismatched types
              found enum `std::result::Result<_, std::num::ParseIntError>`
 ```
 
-太好了！所以我们只需要把回车改成这样。现在它能工作了:
+很好! 所以我们只要把返回值改成编译器说的就可以了:
 
 ```rust
 use std::num::ParseIntError;
@@ -13951,7 +13962,7 @@ fn main() {
 }
 ```
 
-第一个不能用，但是第二个可以用。
+现在程序可以运行了!
 
 ```text
 Ok(88)
@@ -14035,7 +14046,7 @@ use std::io::Write;
 fn main() -> std::io::Result<()> {
     let mut file = fs::File::create("myfilename.txt")?; // Create a file with this name.
                                                         // CAREFUL! If you have a file with this name already,
-                                                        // it will delete it and make a new one.
+                                                        // it will delete everything in it.
     file.write_all(b"Let's put this in the file")?;     // Don't forget the b in front of ". That's because files take bytes.
     Ok(())
 }
@@ -14057,7 +14068,7 @@ fn main() -> std::io::Result<()> {
 
 所以这是说 "请尝试创建一个文件，然后检查是否成功。如果成功了，那就使用`.write_all()`，然后检查是否成功。"
 
-而事实上，也有一个函数可以同时完成这两件事。它的名字叫`std::fs::write`。在它里面，你给它你想要的文件名，以及你想要放在里面的内容。再次强调，小心! 如果有相同的名字，它就会删除已经存在的文件。另外，它让你写一个`&str`，前面不写`b`，因为这个:
+而事实上，也有一个函数可以同时做这两件事。它叫做`std::fs::write`。在它里面，你给它你想要的文件名，以及你想放在里面的内容。再次强调，要小心! 如果该文件已经存在，它将删除其中的所有内容。另外，它允许你写一个`&str`，前面不写`b`，因为这个:
 
 ```rust
 pub fn write<P: AsRef<Path>, C: AsRef<[u8]>>(path: P, contents: C) -> Result<()>
