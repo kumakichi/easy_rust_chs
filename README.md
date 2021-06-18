@@ -2983,8 +2983,8 @@ Not much green.
 
 在这里你可以开始赋予你的结构体和枚举一些真正的力量。要调用 `struct` 或 `enum` 上的函数，请使用 `impl` 块。这些函数被称为**方法**。`impl`块中有两种方法。
 
-- 常规方法:这些方法取 **self** (或 **&self** 或 **&mut self** )。常规方法使用`.`(句号)。`.clone()`是常规方法的一个例子。
-- 关联方法(或 "静态"方法):这些方法不用self。关联的意思是 "相关于"。它们的写法不同，使用 `::`。`String::from()`是一个关联方法，`Vec::new()`也是。你通常看到关联方法用于创建新变量。
+- 方法：这些方法取**self**（或**&self**或**&mut self**）。常规方法使用"."（一个句号）。`.clone()`是一个常规方法的例子。
+- 关联函数（在某些语言中被称为 "静态 "方法）：这些函数不使用self。关联的意思是 "与之相关"。它们的书写方式不同，使用`::`。`String::from()`是一个关联函数，`Vec::new()`也是。你看到的关联函数最常被用来创建新的变量。
 
 在我们的例子中，我们将创建Animal并打印它们。
 
@@ -3041,7 +3041,7 @@ impl Animal {
 
 
 fn main() {
-    let mut new_animal = Animal::new(); // Associated method to create a new animal
+    let mut new_animal = Animal::new(); // Associated function to create a new animal
                                         // It is a cat, 10 years old
     new_animal.check_type();
     new_animal.change_to_dog();
