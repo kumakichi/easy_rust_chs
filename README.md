@@ -376,7 +376,7 @@ fn main() {
 }
 ```
 
-对于数字，你可以在数字后面说类型。你不需要空格--只需要在数字后面直接输入。
+对于数字，你可以在数字后面加上类型。你不需要空格--只需要在数字后面直接输入。
 
 ```rust
 fn main() {
@@ -665,7 +665,7 @@ fn main() {
 }
 ```
 
-当我们运行这个时，编译器会说。
+当我们运行这个时，编译器会说:
 
 ```text
 error[E0277]: `()` doesn't implement `std::fmt::Display`
@@ -972,7 +972,7 @@ He said, "You can find the file at c:\files\my_documents\file.txt." Then I found
 He said, "You can find the file at c:\files\my_documents\file.txt." Then I found the file.
 ```
 
-如果你需要用`#`在里面打印，那么你可以用`r##`开头，用`##`结尾。而如果你需要多个，可以在每边多加一个#。
+如果你需要在里面打印`#`，那么你可以用`r##`开头，用`##`结尾。如果你需要打印多个连续的`#`，可以在每边多加一个#。
 
 下面是四个例子。
 
@@ -1070,7 +1070,7 @@ fn main() {
 
 
 
-还有一个Unicode转义，可以让你在字符串中打印任何Unicode字符。`\u{}`. `{}`里面有一个十六进制数字可以打印。下面是一个简短的例子，说明如何获得Unicode数字，以及如何再次打印它。
+还有一个Unicode转义，可以让你在字符串中打印任何Unicode字符: `\u{}`。`{}`里面有一个十六进制数字可以打印。下面是一个简短的例子，说明如何获得Unicode数字，以及如何再次打印它。
 
 ```rust
 fn main() {
@@ -1172,7 +1172,7 @@ fn main() {
 这样打印出来的结果是`ㅎㅎㅎㅎㅎaㅎㅎㅎㅎㅎ`。我们看看1)到5)的这个情况，就能明白编译器是怎么读的。
 
 - 你要不要变量名？`{:ㅎ^11}`没有变量名。`:`之前没有任何内容。
-- 你需要一个填充字符吗？`{:ㅎ^11}` 是的:ㅎ"在`:`后面，有一个`^`。`<`表示填充字符在左边，`>`表示在右边，`^`表示在中间。
+- 你需要一个填充字符吗？`{:ㅎ^11}` 是的:ㅎ"在`:`后面，有一个`^`。`<`表示变量在填充字符左边，`>`表示在填充字符右边，`^`表示在填充字符中间。
 - 要不要设置最小长度？`{:ㅎ^11}`是:后面有一个11。
 - 你想要一个最大长度吗？`{:ㅎ^11}` 不是:前面没有`.`的数字。
 
@@ -1217,7 +1217,7 @@ fn main() {
 }
 ```
 
-你可以在`String::from("Adrian Fahrenheit Țepeș")`中看到，很容易从`&str`中做出一个`String`。这两种类型虽然不同，但联系非常紧密。
+你可以在`String::from("Adrian Fahrenheit Țepeș")`中看到，很容易从`&str`中创建一个`String`。这两种类型虽然不同，但联系非常紧密。
 
 你甚至可以写表情符号，这要感谢UTF-8。
 
@@ -1259,7 +1259,7 @@ And 'Adrian Fahrenheit Țepeș' is 25 bytes. It is not Sized.
 
 
 
-有很多方法可以写出`String`。下面是一些。
+有很多方法可以创建`String`。下面是一些。
 
 - `String::from("This is the string text");` 这是String的一个方法，它接受文本并创建一个String.
 - `"This is the string text".to_string()`. 这是&str的一个方法，使其成为一个String。
@@ -1289,7 +1289,7 @@ fn main() {
 }
 ```
 
-Rust不知道你要的是什么类型，因为很多类型都可以从一个`&str`做出来。它说:"我可以把一个&str做成很多东西。你想要哪一种？"
+Rust不知道你要的是什么类型，因为很多类型都可以从一个`&str`创建出来。它说:"我可以把一个&str做成很多东西。你想要哪一种？"
 
 ```text
 error[E0282]: type annotations needed
@@ -1463,7 +1463,7 @@ fn main() {
 
 ### 再谈shadowing
 
-还记得我们说过，shadowing不会**破坏**一个值，而是**阻挡**它吗？现在我们可以用引用来看看这个问题。
+还记得我们说过，shadowing不会**破坏**一个值，而是**屏蔽**它吗？现在我们可以用引用来看看这个问题。
 
 ```rust
 fn main() {
@@ -1871,11 +1871,11 @@ fn main() {
 记住这一点。
 
 - 索引号从0开始(不是1)
-- 指数范围是**排他的**(不包括最后一个数字)。
+- 索引范围是**不包含的**(不包括最后一个数字)。
 
 所以`[0..2]`是指第一个指数和第二个指数(0和1)。或者你也可以称它为 "零点和第一"指数。它没有第三项，也就是索引2。
 
-你也可以有一个**包容的**范围，这意味着它也包括最后一个数字。要做到这一点。
+你也可以有一个**包含的**范围，这意味着它也包括最后一个数字。要做到这一点。
  添加`=`，写成`..=`，而不是`..`。所以，如果你想要第一项、第二项和第三项，可以写成`[0..=2]`，而不是`[0..2]`。
 
 ## 向量
@@ -2983,7 +2983,7 @@ Not much green.
 
 在这里你可以开始赋予你的结构体和枚举一些真正的力量。要调用 `struct` 或 `enum` 上的函数，请使用 `impl` 块。这些函数被称为**方法**。`impl`块中有两种方法。
 
-- 方法：这些方法取**self**（或**&self**或**&mut self**）。常规方法使用"."（一个句号）。`.clone()`是一个常规方法的例子。
+- 方法：这些方法取**self**（或 **&self** 或 **&mut self** ）。常规方法使用"."（一个句号）。`.clone()`是一个常规方法的例子。
 - 关联函数（在某些语言中被称为 "静态 "方法）：这些函数不使用self。关联的意思是 "与之相关"。它们的书写方式不同，使用`::`。`String::from()`是一个关联函数，`Vec::new()`也是。你看到的关联函数最常被用来创建新的变量。
 
 在我们的例子中，我们将创建Animal并打印它们。
@@ -3095,7 +3095,7 @@ fn main() {
 
 ## 解构
 
-我们再来看一些解构。你可以通过使用`let`倒过来从一个结构体或枚举中获取值。我们了解到这是`destructuring`，因为你得到的变量不是结构体的一部分。现在你分别得到了值。首先是一个简单的例子。
+我们再来看一些解构。你可以通过使用`let`倒过来从一个结构体或枚举中获取值。我们了解到这是`destructuring`，因为你得到的变量不是结构体的一部分。现在你分别得到了它们的值。首先是一个简单的例子。
 
 ```rust
 struct Person { // make a simple struct for a person
@@ -3479,13 +3479,13 @@ I have two things to say: Hello there! and I hate sand.
 I have two things to say: Where is Padme? and Is she all right?
 ```
 
-## 选项和结果
+## Option和Result
 
 我们现在理解了枚举和泛型，所以我们可以理解`Option`和`Result`。Rust使用这两个枚举来使代码更安全。
 
 我们将从`Option`开始。
 
-### 选项
+### Option
 
 当你有一个可能存在，也可能不存在的值时，你就用`Option`。当一个值存在的时候就是`Some(value)`，不存在的时候就是`None`，下面是一个坏代码的例子，可以用`Option`来改进。
 
@@ -3530,7 +3530,7 @@ fn main() {
 
 这个打印的是`None, Some(5)`。这下好了，因为现在我们再也不崩溃了。但是我们如何得到5的值呢？
 
-我们可以用 `.unwrap()` 在一个选项中获取值，但要小心 `.unwrap()`。这就像拆礼物一样:也许里面有好东西，也许里面有一条愤怒的蛇。只有在你确定的情况下，你才会想要`.unwrap()`。如果你拆开一个`None`的值，程序就会崩溃。
+我们可以用 `.unwrap()` 在一个Option中获取值，但要小心 `.unwrap()`。这就像拆礼物一样:也许里面有好东西，也许里面有一条愤怒的蛇。只有在你确定的情况下，你才会想要`.unwrap()`。如果你拆开一个`None`的值，程序就会崩溃。
 
 ```rust
 // ⚠️
@@ -3622,7 +3622,7 @@ None(value) => println!("The value is {}", value),
 
 因为`None`只是`None`。
 
-当然，还有更简单的方法来使用Option。在这段代码中，我们将使用一个叫做 `.is_some()` 的方法来告诉我们是否是 `Some`。(是的，还有一个叫做`.is_none()`的方法。)在这个更简单的方法中，我们不需要`handle_option()`了。我们也不需要选项的vec了。
+当然，还有更简单的方法来使用Option。在这段代码中，我们将使用一个叫做 `.is_some()` 的方法来告诉我们是否是 `Some`。(是的，还有一个叫做`.is_none()`的方法。)在这个更简单的方法中，我们不需要`handle_option()`了。我们也不需要Option的vec了。
 
 ```rust
 fn take_fifth(value: Vec<i32>) -> Option<i32> {
@@ -3656,16 +3656,16 @@ We got nothing.
 We got: 5
 ```
 
-### 结果
+### Result
 
-结果和Option类似，但这里的区别是。
+Result和Option类似，但这里的区别是。
 
-- 选项大约是`Some`或`None`(有值或无值)。
-- 结果大约是`Ok`或`Err`(还好的结果，或错误的结果)。
+- Option大约是`Some`或`None`(有值或无值)。
+- Result大约是`Ok`或`Err`(还好的结果，或错误的结果)。
 
 所以，`Option`是如果你在想:"也许会有，也许不会有。"也许会有一些东西，也许不会有。" 但`Result`是如果你在想: "也许会失败"
 
-比较一下，这里是选项和结果的签名。
+比较一下，这里是Option和Result的签名。
 
 ```rust
 enum Option<T> {
@@ -3781,14 +3781,14 @@ thread 'main' panicked at 'called `Result::unwrap()` on an `Err` value: "There w
 
 这些信息可以帮助你修正你的代码。`src\main.rs:30:20`的意思是 "在目录src的main.rs内，第30行和第20列"。所以你可以去那里查看你的代码并修复问题。
 
-你也可以创建自己的错误类型。标准库中的结果函数和其他人的代码通常都会这样做:例如，标准库中的这个函数。
+你也可以创建自己的错误类型，标准库中的Result函数和其他人的代码通常都会这样做。例如，标准库中的这个函数。
 
 ```rust
 // 🚧
 pub fn from_utf8(vec: Vec<u8>) -> Result<String, FromUtf8Error>
 ```
 
-这个函数接收一个字节向量(`u8`)，并尝试创建一个`String`，所以结果的成功情况是`String`，错误情况是`FromUtf8Error`。你可以给你的错误类型起任何你想要的名字。
+这个函数接收一个字节向量(`u8`)，并尝试创建一个`String`，所以Result的成功情况是`String`，错误情况是`FromUtf8Error`。你可以给你的错误类型起任何你想要的名字。
 
 使用 `match` 与 `Option` 和 `Result` 有时需要很多代码。例如，`.get()` 方法在 `Vec` 上返回 `Option`。
 
@@ -3824,7 +3824,7 @@ fn main() {
 }
 ```
 
-这是好的，但是我们对`None`不做任何处理，因为我们不关心。这里我们可以用`if let`把代码变小。`if let`的意思是 "符合就做，不符合就不做"。`if let`是指对所有的东西都不关心匹配的时候。
+这是好的，但是我们对`None`不做任何处理，因为我们不关心。这里我们可以用`if let`把代码变小。`if let`的意思是 "符合就做，不符合就不做"。`if let`是在你不要求对所有的东西都匹配的时候使用。
 
 ```rust
 fn main() {
@@ -4351,7 +4351,7 @@ You need to: Watch some YouTube
 
 ### VecDeque
 
-`VecDeque`就是一个`Vec`，既能从前面弹出item，又能从后面弹出item。Rust有`VecDeque`是因为`Vec`很适合从后面(最后一个物品)弹出，但从前面弹出就不那么好了。当你在`.pop()`上使用`Vec`的时候，它只是把右边最后一个item取下来，其他的都不会动。但是如果你把它从其他部分取下来，右边的所有物品都会向左移动一个位置。你可以在`.remove()`的描述中看到这一点。
+`VecDeque`就是一个`Vec`，既能从前面弹出item，又能从后面弹出item。Rust有`VecDeque`是因为`Vec`很适合从后面(最后一个元素)弹出，但从前面弹出就不那么好了。当你在`Vec`上使用`.pop()`的时候，它只是把右边最后一个item取下来，其他的都不会动。但是如果你把它从其他部分取下来，右边的所有元素都会向左移动一个位置。你可以在`.remove()`的描述中看到这一点。
 
 
 ```text
@@ -4448,7 +4448,7 @@ You must: phone Loki back
 
 有一种更短的方法来处理`Result`(和`Option`)，它比`match`和`if let`更短。它叫做 "问号运算符"，就是`?`。在返回结果的函数后，可以加上`?`。这样就会:
 
-- 返回`Result`里面的内容，如果是`Ok`。
+- 如果是`Ok`，返回`Result`里面的内容。
 - 如果是`Err`，则将错误传回。
 
 换句话说，它几乎为你做了所有的事情。
@@ -4544,7 +4544,7 @@ fn main() {
 
 ### When panic and unwrap are good
 
-Rust有一个`panic!`的宏，你可以用它来让它崩溃。它使用起来很方便。
+Rust有一个`panic!`的宏，你可以用它来让程序崩溃。它使用起来很方便。
 
 ```rust
 fn main() {
@@ -4687,9 +4687,9 @@ thread 'main' panicked at 'assertion failed: `(left != right)`
  right: `"Mithridates"`: You entered Mithridates. Input must not equal Mithridates', src\main.rs:4:5
 ```
 
-所以它说 "你说左！=右，但左==右"。而且它显示我们的信息说`You entered Mithridates. Input must not equal Mithridates`。
+所以它说 "你说左!=右，但左==右"。而且它显示我们的信息说`You entered Mithridates. Input must not equal Mithridates`。
 
-当你在写程序的时候，想让它在出现问题的时候崩溃，`unwrap`是个好注意。后面，当你的代码写完后，把`unwrap`改成其他不会崩溃的东西就好了。
+当你在写程序的时候，想让它在出现问题的时候崩溃，`unwrap`是个好注意。当你的代码写完后，把`unwrap`改成其他不会崩溃的东西就好了。
 
 你也可以用`expect`，它和`unwrap`一样，但是更好一些，因为它支持用户自定义信息。教科书通常会给出这样的建议:"如果你经常使用`.unwrap()`, 至少也要用`.expect()`来获得更好的错误信息."
 
@@ -4725,7 +4725,7 @@ fn main() {
 }
 ```
 
-又崩溃了，但错误比较多。`thread 'main' panicked at 'Input vector needs at least 4 items', src\main.rs:7:18`. `.expect()`因为这个原因比`.unwrap()`要好一点，但是在`None`上还是会慌。现在这里是一个不好的做法的例子，一个函数试图解包两次。它需要一个`Vec<Option<i32>>`，所以可能每个部分都会有一个`Some<i32>`，也可能有一个`None`。
+又崩溃了，但错误比较多。`thread 'main' panicked at 'Input vector needs at least 4 items', src\main.rs:7:18`. `.expect()`因为这个原因比`.unwrap()`要好一点，但是在`None`上还是会崩溃。现在这里有一个错误的案例，一个函数试图unwrap两次。它需要一个`Vec<Option<i32>>`，所以可能每个部分都会有一个`Some<i32>`，也可能是一个`None`。
 
 ```rust
 fn try_two_unwraps(input: Vec<Option<i32>>) {
@@ -4739,7 +4739,7 @@ fn main() {
 }
 ```
 
-消息是:``thread 'main' panicked at 'called `Option::unwrap()` on a `None` value', src\main.rs:2:32``。我们不检查行号，就不知道是第一个`.unwrap()`还是第二个`.unwrap()`。最好是检查长度，也不要解包。不过有了`.expect()`至少会好*一点*。下面是`.expect()`的情况。
+消息是:``thread 'main' panicked at 'called `Option::unwrap()` on a `None` value', src\main.rs:2:32``。我们不检查行号，就不知道是第一个`.unwrap()`还是第二个`.unwrap()`。最好是检查一下长度，也不要unwrap。不过有了`.expect()`至少会好*一点*。下面是`.expect()`的情况：
 
 ```rust
 fn try_two_unwraps(input: Vec<Option<i32>>) {
@@ -4817,7 +4817,7 @@ let result = self.second_thing + self.first_thing as f32
 let result = self.second_thing as u32 + self.first_thing
 ```
 
-或者我们想把`self.first_thing`放在`self.second_thing`旁边，说我们要这样加。所以如果我们把55加到33.4，我们要看到的是5533.4，而不是88.4。
+或者我们想把`self.first_thing`放在`self.second_thing`旁边，这样加。所以如果我们把55加到33.4，我们要看到的是5533.4，而不是88.4。
 
 所以首先我们看一下如何创建一个trait。关于`trait`，要记住的重要一点是，它们是关于行为的。要创建一个trait，写下单词`trait`，然后创建一些函数。
 
@@ -5927,7 +5927,7 @@ fn main() {
 
 但是人们经常会把所有的`||`函数都叫做闭包，所以你不用担心名字的问题。我们只对任何带有`||`的函数说 "closure"，但请记住，它可能意味着一个 "匿名函数"。
 
-为什么要知道这两者的区别呢？因为匿名函数其实和有名字的函数做的机器代码是一样的。它们给人的感觉是 "高层抽象"，所以有时候大家会觉得机器代码会很复杂。但是Rust用它做出来的机器码和普通函数一样快。
+为什么要知道这两者的区别呢？因为匿名函数其实和有名字的函数做的机器代码是一样的。它们给人的感觉是 "高层抽象"，所以有时候大家会觉得机器代码会很复杂。但是Rust用它生成的机器码和普通函数一样快。
 
 
 所以我们再来看看闭包能做的一些事情。你也可以这样做:
@@ -5964,7 +5964,7 @@ fn main() {
 }
 ```
 
-当然，结尾可以很简单。例如，你可以只写`let fourth = my_vec.get(3).unwrap_or_else(|| &0);`。你不需要总是因为有一个闭包就使用`{}`并写出复杂的代码。只要你把`||`放进去，编译器就知道你放了你需要的闭包。
+当然，闭包也可以很简单。例如，你可以只写`let fourth = my_vec.get(3).unwrap_or_else(|| &0);`。你不需要总是因为有一个闭包就使用`{}`并写出复杂的代码。只要你把`||`放进去，编译器就知道你放了你需要的闭包。
 
 最常用的闭包方法可能是`.map()`。我们再来看看它。下面是一种使用方法。
 
@@ -6038,8 +6038,8 @@ warning: unused `std::iter::Map` that must be used
 - `let num_vec = vec![10, 9, 8];` 现在是一个`Vec<i32>`。
 - `.iter()` 现在是一个 `Iter<i32>`。所以它是一个迭代器，其元素为 `i32`。
 
-- `.enumerate()`现在是一个`Enumerate<Iter<i32>>`型。所以它是`Enumerate`型的`Iter`型的`i32`s。
-- `.map()`现在是一个`Map<Enumerate<Iter<i32>>>`的类型。所以它是一个类型`Map`的类型`Enumerate`的类型`Iter`的类型`i32`s。
+- `.enumerate()`现在是一个`Enumerate<Iter<i32>>`型。所以它是`Enumerate`型的`Iter`型的`i32`。
+- `.map()`现在是一个`Map<Enumerate<Iter<i32>>>`的类型。所以它是一个类型`Map`的类型`Enumerate`的类型`Iter`的类型`i32`。
 
 我们所做的只是做了一个越来越复杂的结构。所以这个`Map<Enumerate<Iter<i32>>>`是一个准备好了的结构，但只有当我们告诉它要做什么的时候，它才会去做。Rust这样做是因为它需要快速。它不想这样做:
 
@@ -6050,7 +6050,7 @@ warning: unused `std::iter::Map` that must be used
 Rust 只想做一次计算，所以它创建结构并等待。然后，如果我们说`.collect::<Vec<i32>>()`，它知道该怎么做，并开始移动。这就是`iterators are lazy and do nothing unless consumed`的意思。迭代器在你 "消耗"它们(用完它们)之前不会做任何事情。
 
 
-你甚至可以用`.collect()`创建像`HashMap`这样复杂的东西，所以它非常强大。下面是一个如何将两个向量放入`HashMap`的例子。首先我们把两个向量做出来，然后我们会对它们使用`.into_iter()`来得到一个值的迭代器。然后我们使用`.zip()`方法。这个方法将两个迭代器连接在一起，就像拉链一样。最后，我们使用`.collect()`来创建`HashMap`。
+你甚至可以用`.collect()`创建像`HashMap`这样复杂的东西，所以它非常强大。下面是一个如何将两个向量放入`HashMap`的例子。首先我们把两个向量创建出来，然后我们会对它们使用`.into_iter()`来得到一个值的迭代器。然后我们使用`.zip()`方法。这个方法将两个迭代器连接在一起，就像拉链一样。最后，我们使用`.collect()`来创建`HashMap`。
 
 下面是代码。
 
@@ -6839,7 +6839,7 @@ Names { one_word: ["Caesar", "Data"], two_words: ["Frodo Baggins", "Bilbo Baggin
 ```
 
 
-## dbg！宏和.inspect
+## dbg! 宏和.inspect
 
 `dbg!`是一个非常有用的宏，可以快速打印信息。它是 `println!` 的一个很好的替代品，因为它的输入速度更快，提供的信息更多。
 
@@ -6865,7 +6865,7 @@ fn main() {
 }
 ```
 
-这段代码创建了一个新的可变数字，并改变了它。然后创建一个vec，并使用`iter`和`map`以及`collect`创建一个新的vec。在这段代码中，我们几乎可以把`dbg!`放在任何地方。`dbg!`问编译器。"此刻你在做什么？"然后告诉你。
+这段代码创建了一个新的可变数字，并改变了它。然后创建一个vec，并使用`iter`和`map`以及`collect`创建一个新的vec。在这段代码中，我们几乎可以把`dbg!`放在任何地方。`dbg!`问编译器："此刻你在做什么？"，然后告诉你:
 
 ```rust
 fn main() {
@@ -6886,13 +6886,13 @@ fn main() {
 [src\main.rs:3] 9 = 9
 ```
 
-和。
+和：
 
 ```text
 [src\main.rs:4] my_number += 10 = ()
 ```
 
-和。
+和：
 
 ```text
 [src\main.rs:6] vec![8, 9, 10] = [
@@ -6912,7 +6912,7 @@ fn main() {
 ]
 ```
 
-和。
+和：
 
 ```text
 [src\main.rs:10] double_vec = [
@@ -6923,7 +6923,7 @@ fn main() {
 ```
 
 
-`.inspect` 与 `dbg!` 有点类似，但你在迭代器中使用它就像 `map`。它给了你迭代项，你可以打印它或者做任何你想做的事情。例如，我们再看看我们的 `double_vec`。
+`.inspect` 与 `dbg!` 有点类似，就像在迭代器中使用`map`一样使用它。它给了你迭代项，你可以打印它或者做任何你想做的事情。例如，我们再看看我们的 `double_vec`。
 
 ```rust
 fn main() {
@@ -7001,8 +7001,8 @@ In binary it is 1010.
 
 `&str`的类型不止一种。我们有。
 
-- 字符串: 当你写`let my_str = "I am a &str"`的时候，你就会产生这些字符。它们在整个程序中持续存在，因为它们是直接写进二进制中的，它们的类型是 `&'static str`。`'`的意思是它的生命期，字符串字元有一个叫`static`的生命期。
-- 借用str。这是常规的 `&str` 形式，没有 `static` 生命期。如果你创建了一个`String`，并得到了它的引用，当你需要它时，Rust会把它转换为`&str`。比如说
+- 字符串： 当你写`let my_str = "I am a &str"`的时候，你就会产生这些字符。它们在整个程序中持续存在，因为它们是直接写进二进制中的，它们的类型是 `&'static str`。`'`的意思是它的生命期，字符串字元有一个叫`static`的生命期。
+- 借用str：这是常规的 `&str` 形式，没有 `static` 生命期。如果你创建了一个`String`，并得到了它的引用，当你需要它时，Rust会把它转换为`&str`。比如说
 
 ```rust
 fn prints_str(my_str: &str) { // it can use &String like a &str
@@ -7243,7 +7243,7 @@ fn main() {}
 它的意思不是说: "我会让`name`的输入与`City`一样长寿"。
 
 
-现在我们可以了解一下之前看到的`<'_>`。这被称为 "匿名生命期"，是使用引用的一个指标。例如，当你在实现结构时，Rust会向你建议。这里有一个几乎可以工作的结构，但还没有。
+现在我们可以了解一下之前看到的`<'_>`。这被称为 "匿名生命期"，是使用引用的一个指标。例如，当你在实现结构时，Rust会向你建议使用。这里有一个几乎可以工作的结构体，但还不能工作：
 
 ```rust
     // ⚠️
@@ -7529,7 +7529,7 @@ fn main() {
 
 - 多个不可变借用可以
 - 一个可变的借用可以
-- 但mutable和immutable借用在一起是不行的
+- 但可变和不可变借用在一起是不行的
 
 所以改变`RefCell`中的值是非常容易的。
 
@@ -12888,7 +12888,7 @@ fn main() {
 180
 ```
 
-这个函数被称为`bad_random_number`，因为它不是一个很好的随机数生成器。Rust有更好的crate，可以用比`rand`更少的代码做出随机数，比如`fastrand`。但这是一个很好的例子，你可以利用你的想象力用`Instant`来做一些事情。
+这个函数被称为`bad_random_number`，因为它不是一个很好的随机数生成器。Rust有更好的crate，可以用比`rand`更少的代码创建随机数，比如`fastrand`。但这是一个很好的例子，你可以利用你的想象力用`Instant`来做一些事情。
 
 当你有一个线程时，你可以使用`std::thread::sleep`使它停止一段时间。当你这样做时，你必须给它一个duration。你不必创建多个线程来做这件事，因为每个程序至少在一个线程上。`sleep`虽然需要一个`Duration`，所以它可以知道要睡多久。你可以这样选单位:`Duration::from_millis()`, `Duration::from_secs`, 等等。这里举一个例子:
 
